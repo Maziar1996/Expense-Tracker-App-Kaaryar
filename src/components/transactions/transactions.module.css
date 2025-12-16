@@ -1,0 +1,116 @@
+.container {
+  width: 70%;
+  margin: 40px auto;
+  background: white;
+  border-radius: 10px;
+  padding: 20px 40px;
+}
+
+.title {
+  text-align: center;
+  margin: 24px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1.2fr;
+  padding: 14px 12px;
+  align-items: center;
+}
+.header {
+  font-weight: bold;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.income {
+  color: var(--green);
+}
+.expense {
+  color: var(--red);
+}
+.income,
+.expense {
+  font-weight: 600;
+}
+.currency {
+  display: none;
+}
+.empty {
+  color: transparent;
+}
+.titleCell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dateCell {
+  font-size: 1rem;
+  color: #333;
+}
+.descriptionCell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: hidden;
+  font-weight: 600;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 80%;
+    height: 90%;
+  }
+  .title {
+    margin: 16px 0 20px;
+    font-size: 16px !important;
+  }
+  .row.header {
+    display: none;
+  }
+  .row {
+    grid-template-columns: 2.2fr 1fr;
+    grid-template-areas:
+      "date amount"
+      "desc desc";
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: none;
+  }
+  .currency {
+    display: inline;
+    margin-right: 5px;
+  }
+  .dateCell {
+    grid-area: date;
+    font-size: 14px;
+  }
+
+  .income,
+  .expense {
+    grid-area: amount;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+  }
+  .income {
+    color: var(--green);
+  }
+  .expense {
+    color: var(--red);
+  }
+  .empty {
+    display: none;
+  }
+  .descriptionCell {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+}

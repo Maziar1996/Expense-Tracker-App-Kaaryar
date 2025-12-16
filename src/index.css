@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+  font-family: "Vazirmatn", sans-serif;
+}
+html {
+  direction: rtl;
+}
+body {
+  background: #b0b8bf;
+}
+
+:root {
+  --green: #3ebd93;
+  --red: #ef4e4e;
+  --border: #b7d8fa;
+  --text-muted: #888;
+}
