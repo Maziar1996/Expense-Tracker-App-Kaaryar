@@ -1,0 +1,16 @@
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1.8fr 0.6fr;
+  padding: 14px 12px;
+  align-items: center;
+}
+.header {
+  font-weight: bold;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+@media (max-width: 768px) {
+  .row.header {
+    display: none;
+  }
+}

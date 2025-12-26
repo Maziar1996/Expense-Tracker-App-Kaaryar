@@ -1,0 +1,100 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.input {
+  width: 312px;
+  height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+input:focus {
+  border-color: #2563eb;
+}
+.label {
+  font-size: 16px;
+  color: #333;
+  font-weight: 400;
+}
+.dateFieldWrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.amountFieldWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendarIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.radioGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.radioLabel input {
+  width: 18px;
+  height: 18px;
+}
+.transDesc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+.cancelBtn {
+  padding: 10px 24px;
+  background: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.submitBtn {
+  padding: 10px 24px;
+  background: #0e33f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+}
+.errorText {
+  margin-top: 8px;
+  color: var(--red);
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .input {
+    width: 240px;
+  }
+  .cancelBtn,
+  .submitBtn {
+    width: 180px;
+  }
+}

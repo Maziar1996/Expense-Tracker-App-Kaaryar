@@ -1,12 +1,16 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: 0;
-  font-family: "Vazirmatn", sans-serif;
-}
+@import url("./assets/fonts/vazirmatn.css");
+
 html {
   direction: rtl;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Vazirmatn", sans-serif;
+}
+
 body {
   background: #b0b8bf;
 }

@@ -1,4 +1,4 @@
-import styled from "./transactions.module.css";
+import styled from "./tableHeader.module.css";
 
 function TableHeader() {
   return (

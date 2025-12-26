@@ -1,8 +1,9 @@
-import styled from "./transactions.module.css";
-import { formatNumber } from "../../utils/formatNumber";
-import { formatPersianDate } from "../../utils/formatPersainDate";
+import styled from "./transactionsRow.module.css";
+import { formatNumber } from "../../../utils/formatNumber";
+import { formatPersianDate } from "../../../utils/formatPersainDate";
+import DeleteButton from "../deleteButton/DeleteButton";
 
-function TransactionsRow({ data }) {
+function TransactionsRow({ data, onDelete }) {
   const isIncome = data.type === "income";
 
   return (
@@ -20,6 +21,10 @@ function TransactionsRow({ data }) {
       </span>
 
       <span className={styled.descriptionCell}>{data.description}</span>
+
+      <div className={styled.actionsCell}>
+        <DeleteButton onDelete={() => onDelete(data.id)} />
+      </div>
     </div>
   );
 }
