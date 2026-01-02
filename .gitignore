@@ -7,10 +7,29 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Production builds
 dist
 dist-ssr
+
+# Local files
 *.local
+ai_full_bundle.json
+bundle_root_project.py
+
+# Vite specific cache
+.cache/
+
+# Environment variables 
+.env
+.env.local
+.env.development
+.env.production
+.env.development.local
+.env.production.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +41,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Optional caches
+.npm
+.eslintcache
+
+# Testing coverage
+coverage/

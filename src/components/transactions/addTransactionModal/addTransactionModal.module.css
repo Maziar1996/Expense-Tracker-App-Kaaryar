@@ -1,0 +1,83 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  width: 520px;
+  max-height: 80vh;
+  padding: 30px;
+  box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.15);
+}
+.line {
+  display: flex;
+  margin: 0px auto 25px;
+  width: 24px;
+  border: 2px solid #d1d4dd;
+  border-radius: 5px;
+  display: none;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 0px 12px;
+  margin-bottom: 10px;
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+}
+.closeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .overlay {
+    align-items: flex-end;
+  }
+  .modal {
+    width: 412px;
+    max-width: none;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 16px 24px;
+    animation: slideUp 0.3s ease-out;
+  }
+  .modalTitle {
+    font-size: 14px;
+    color: #242d35;
+    font-weight: 500;
+  }
+  .header {
+    justify-content: center;
+  }
+  .closeBtn {
+    display: none;
+  }
+  .line {
+    display: flex;
+  }
+}
+@media (max-width: 380px) {
+  .modal {
+    width: 100%;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

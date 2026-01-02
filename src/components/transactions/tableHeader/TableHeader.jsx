@@ -1,11 +1,11 @@
-import styled from "./transactions.module.css";
+import styled from "./tableHeader.module.css";
 
 function TableHeader() {
   return (
     <div className={`${styled.row} ${styled.header}`}>
       <span>تاریخ</span>
-      <span>(تومان) درآمد</span>
-      <span>(تومان) هزینه</span>
+      <span>درآمد (تومان)</span>
+      <span>هزینه (تومان)</span>
       <span>شرح</span>
     </div>
   );

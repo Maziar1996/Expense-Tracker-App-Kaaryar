@@ -1,6 +1,30 @@
-import TransactionsTable from "../components/transactions/TransactionsTable";
+import TransactionsTable from "../components/transactions/transactionsTable/TransactionsTable";
+import AddTransactionButton from "../components/transactions/addTransactionButton/AddTransactionButton";
+import AddTransactionModal from "../components/transactions/addTransactionModal/AddTransactionModal";
+import styled from "./transactionsPage.module.css";
+function TransactionsPage({
+  transactions,
+  isModalOpen,
+  openModal,
+  closeModal,
+  addTransaction,
+  onDelete,
+}) {
+  return (
+    <>
+      <div className={styled.pageContainer}>
+        <div className={styled.header}>
+          <AddTransactionButton onClick={openModal} />
+          <h1 className={styled.title}>تراکنش ها</h1>
+        </div>
 
-function TransactionsPage() {
-  return <TransactionsTable />;
+        <TransactionsTable transactions={transactions} onDelete={onDelete} />
+
+        {isModalOpen && (
+          <AddTransactionModal onClose={closeModal} onAdd={addTransaction} />
+        )}
+      </div>
+    </>
+  );
 }
 export default TransactionsPage;
