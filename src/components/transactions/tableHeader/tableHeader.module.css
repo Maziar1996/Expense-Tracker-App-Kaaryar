@@ -9,6 +9,7 @@
   color: var(--text-muted);
   border-bottom: 2px solid var(--border);
 }
+
 @media (max-width: 768px) {
   .row.header {
     display: none;

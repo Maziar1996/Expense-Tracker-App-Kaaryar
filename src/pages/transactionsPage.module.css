@@ -25,4 +25,12 @@
     padding: 16px 20px 0px;
     max-width: 100%;
   }
+  .pageContainer {
+    width: 85%;
+  }
+}
+@media (max-width: 468px) {
+  .pageContainer {
+    width: 95%;
+  }
 }

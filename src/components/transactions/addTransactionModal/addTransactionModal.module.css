@@ -10,11 +10,11 @@
 
 .modal {
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   width: 520px;
+  max-height: 80vh;
   padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  direction: rtl;
+  box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.15);
 }
 .line {
   display: flex;
@@ -34,7 +34,7 @@
 
 .modalTitle {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   color: #444;
 }
 .closeBtn {
@@ -43,8 +43,20 @@
   cursor: pointer;
 }
 @media (max-width: 768px) {
+  .overlay {
+    align-items: flex-end;
+  }
   .modal {
     width: 412px;
+    max-width: none;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 16px 24px;
+    animation: slideUp 0.3s ease-out;
+  }
+  .modalTitle {
+    font-size: 14px;
+    color: #242d35;
+    font-weight: 500;
   }
   .header {
     justify-content: center;
@@ -54,5 +66,18 @@
   }
   .line {
     display: flex;
+  }
+}
+@media (max-width: 380px) {
+  .modal {
+    width: 100%;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }

@@ -16,7 +16,8 @@ dist-ssr
 
 # Local files
 *.local
-project-bundle.txt
+ai_full_bundle.json
+bundle_root_project.py
 
 # Vite specific cache
 .cache/

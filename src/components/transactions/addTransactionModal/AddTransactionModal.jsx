@@ -1,14 +1,22 @@
 import { useEffect } from "react";
 import styled from "./addTransactionModal.module.css";
 import AddTransactionForm from "./../addTransactionForm/AddTransactionForm";
+import CloseIcon from "../../icons/CloseIcon";
 
 function AddTransactionModal({ onClose, onAdd }) {
   useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const handleEsc = e => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleEsc);
+    };
   }, [onClose]);
 
   return (
@@ -22,21 +30,7 @@ function AddTransactionModal({ onClose, onAdd }) {
             onClick={onClose}
             aria-label="بستن"
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 6L18 18M18 6L6 18"
-                stroke="#9CA3AF"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <CloseIcon />
           </button>
         </div>
         <AddTransactionForm onAdd={onAdd} onCancel={onClose} />
