@@ -83,12 +83,12 @@
   .descriptionCell {
     font-size: 15px;
     line-height: 1.6;
-    margin-top: 4px;
+    margin-top: 10px;
     align-self: flex-start;
   }
   .actionsCell {
     grid-area: actions;
     justify-content: flex-end;
-    margin-top: -20px;
+    margin-top: -25px;
   }
 }
