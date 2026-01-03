@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TransactionsPage from "./pages/TransactionsPage";
 
-import { transactions } from "./dataBase/transactions";
-
 function App() {
-  const [transactionList, setTransactionList] = useState(transactions);
+  const [transactionList, setTransactionList] = useState(() => {
+    const savedData = localStorage.getItem("expenseTrackerData");
+    if (savedData) {
+      try {
+        return JSON.parse(savedData);
+      } catch (error) {
+        console.error("Error getting data from localStorage", error);
+        return [];
+      }
+    }
+    return [];
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,6 +31,10 @@ function App() {
   const deleteTransaction = id => {
     setTransactionList(prev => prev.filter(item => item.id !== id));
   };
+
+  useEffect(() => {
+    localStorage.setItem("expenseTrackerData", JSON.stringify(transactionList));
+  }, [transactionList]);
   return (
     <TransactionsPage
       transactions={transactionList}
@@ -33,5 +46,3 @@ function App() {
     />
   );
 }
-
-export default App;
