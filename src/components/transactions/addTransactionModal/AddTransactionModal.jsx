@@ -20,7 +20,7 @@ function AddTransactionModal({ onClose, onAdd }) {
   }, [onClose]);
 
   return (
-    <div className={styled.overlay} onClick={onClose}>
+    <div className={styled.overlay}>
       <div className={styled.modal} onClick={e => e.stopPropagation()}>
         <div className={styled.line}></div>
         <div className={styled.header}>
