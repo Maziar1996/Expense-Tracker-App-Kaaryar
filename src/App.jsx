@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import TransactionsPage from "./pages/TransactionsPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Dashboard from "./pages/dashboard/Dashboard";
+import ExpensesPage from "./pages/expenses/ExpensesPage";
+import NotFound from "./pages/notFound/NotFound";
 
 function App() {
   const [transactionList, setTransactionList] = useState(() => {
@@ -36,14 +40,28 @@ function App() {
     localStorage.setItem("expenseTrackerData", JSON.stringify(transactionList));
   }, [transactionList]);
   return (
-    <TransactionsPage
-      transactions={transactionList}
-      isModalOpen={isModalOpen}
-      openModal={openModal}
-      closeModal={closeModal}
-      addTransaction={addTransaction}
-      onDelete={deleteTransaction}
-    />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route
+            path="expenses"
+            element={
+              <ExpensesPage
+                transactions={transactionList}
+                isModalOpen={isModalOpen}
+                openModal={openModal}
+                closeModal={closeModal}
+                addTransaction={addTransaction}
+                onDelete={deleteTransaction}
+              />
+            }
+          />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
 export default App;

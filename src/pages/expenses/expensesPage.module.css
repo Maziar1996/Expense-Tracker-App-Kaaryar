@@ -4,13 +4,17 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 40px 0;
-  max-width: 100%;
   margin: 0 auto;
+  background: #ffffff;
+  position: relative;
 }
 .pageContainer {
-  width: 70%;
-  margin: 40px auto;
-  background: white;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 816px;
+  height: 80vh;
+  position: absolute;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -26,7 +30,8 @@
     max-width: 100%;
   }
   .pageContainer {
-    width: 85%;
+    width: 420px;
+    max-height: 875px;
   }
 }
 @media (max-width: 468px) {

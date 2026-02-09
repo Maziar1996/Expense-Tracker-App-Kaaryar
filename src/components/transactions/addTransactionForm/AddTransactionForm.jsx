@@ -28,8 +28,6 @@ function AddTransactionForm({ onAdd, onCancel }) {
       if (+d < 1 || +d > 31) newErrors.date = "روز نامعتبر است";
     }
 
-    if (!date.trim()) newErrors.date = "تاریخ را وارد کنید";
-
     if (!amount.trim()) newErrors.amount = "مبلغ را وارد کنید";
     else if (
       isNaN(amount.replace(/,/g, "")) ||
