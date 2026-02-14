@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/layout/Layout";
+import Layout from "./layout/Layout";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ExpensesPage from "./pages/expenses/ExpensesPage";
-import NotFound from "./pages/notFound/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const [transactionList, setTransactionList] = useState(() => {
@@ -43,6 +43,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route
             path="expenses"

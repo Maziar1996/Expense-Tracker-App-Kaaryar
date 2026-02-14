@@ -1,10 +1,10 @@
 import styled from "./transactionsTable.module.css";
 
-import TableHeader from "../tableHeader/TableHeader";
+import TableHeader from "../TableHeader/TableHeader";
 
-import TransactionsRow from "../transactionRow/TransactionsRow";
+import TransactionsRow from "../TransactionRow/TransactionsRow";
 
-import ExclamationIcon from "../../icons/ExclamationIcon";
+import ExclamationIcon from "../Icons/ExclamationIcon";
 
 function TransactionsTable({ transactions, onDelete }) {
   const hasTransactions = transactions.length > 0;

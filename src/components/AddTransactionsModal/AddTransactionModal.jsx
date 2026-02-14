@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "./addTransactionModal.module.css";
-import AddTransactionForm from "./../addTransactionForm/AddTransactionForm";
-import CloseIcon from "../../icons/CloseIcon";
+import AddTransactionForm from "../AddTransactionsForm/AddTransactionForm";
+import CloseIcon from "../Icons/CloseIcon";
 
 function AddTransactionModal({ onClose, onAdd }) {
   useEffect(() => {

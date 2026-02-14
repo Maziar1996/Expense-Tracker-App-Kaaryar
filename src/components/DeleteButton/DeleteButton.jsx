@@ -1,4 +1,4 @@
-import { TrashIcon } from "../../icons/Index";
+import { TrashIcon } from "../Icons/Index";
 import styled from "./deleteButton.module.css";
 
 function DeleteButton({ onDelete }) {
