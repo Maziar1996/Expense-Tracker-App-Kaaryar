@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "./addTransactionForm.module.css";
-import { toPersianNumber } from "../../../utils/numberUtils";
+import { toPersianNumber } from "../../utils/numberUtils";
 import {
   formatPersianDate,
   sanitizePersianDateTyping,
-} from "../../../utils/formatPersainDate";
-import CalendarIcon from "../../icons/CalendarIcon";
+} from "../../utils/formatPersainDate";
+import CalendarIcon from "../Icons/CalendarIcon";
 function AddTransactionForm({ onAdd, onCancel }) {
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
