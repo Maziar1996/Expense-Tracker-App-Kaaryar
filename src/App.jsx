@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./layout/Layout";
-import Dashboard from "./pages/dashboard/Dashboard";
-import ExpensesPage from "./pages/expenses/ExpensesPage";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import ExpensesPage from "./pages/Expenses/ExpensesPage";
 import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
@@ -44,9 +44,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route
-            path="expenses"
+            path="/expenses"
             element={
               <ExpensesPage
                 transactions={transactionList}
