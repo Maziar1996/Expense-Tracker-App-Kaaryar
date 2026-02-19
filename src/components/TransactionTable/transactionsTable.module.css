@@ -1,12 +1,13 @@
 .container {
   padding: 20px 40px 40px;
   position: relative;
-  min-height: 90vh;
+  background: #ffffff;
+  height: 100%;
 }
 
 .emptyMessage {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;

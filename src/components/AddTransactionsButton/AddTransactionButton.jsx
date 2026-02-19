@@ -1,4 +1,4 @@
-import PlusIcon from "../../icons/PlusIcon";
+import PlusIcon from "../Icons/PlusIcon";
 import styled from "./addTransactionButton.module.css";
 function AddTransactionButton({ onClick }) {
   return (
