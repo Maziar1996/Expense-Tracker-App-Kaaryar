@@ -12,14 +12,24 @@ function Header() {
         </div>
         <div className={styled.navBar}>
           <ul className={styled.navList}>
-            <li className={styled.active}>
-              <NavLink to="/dashboard" className={styled.link}>
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive ? `${styled.link} ${styled.active}` : styled.link
+                }
+              >
                 داشبورد
               </NavLink>
             </li>
 
             <li>
-              <NavLink to="/expenses" className={styled.link}>
+              <NavLink
+                to="/expenses"
+                className={({ isActive }) =>
+                  isActive ? `${styled.link} ${styled.active}` : styled.link
+                }
+              >
                 لیست هزینه ها
               </NavLink>
             </li>

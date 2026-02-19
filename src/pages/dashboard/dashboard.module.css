@@ -4,7 +4,7 @@
   padding: 36px 24px;
   font-size: 20px;
   font-weight: 600;
-  top: 20%;
+  top: 15%;
   left: 50%;
   border-radius: 16px;
   transform: translateX(-50%);
@@ -12,6 +12,7 @@
   position: absolute;
   background: #ffffff;
 }
+
 @media (max-width: 768px) {
   .container {
     width: 420px;
