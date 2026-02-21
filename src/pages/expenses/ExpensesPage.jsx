@@ -1,30 +1,41 @@
+import { useState } from "react";
+import { useTransactions } from "../../Context/TransactionContext";
 import TransactionsTable from "../../components/TransactionTable/TransactionsTable";
 import AddTransactionButton from "../../components/AddTransactionsButton/AddTransactionButton";
 import AddTransactionModal from "../../components/AddTransactionsModal/AddTransactionModal";
 import styled from "./expensesPage.module.css";
-function ExpensesPage({
-  transactions,
-  isModalOpen,
-  openModal,
-  closeModal,
-  addTransaction,
-  onDelete,
-}) {
+function ExpensesPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { transactions, addTransaction, deleteTransaction } = useTransactions();
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleAddTransaction = newTransactionData => {
+    addTransaction(newTransactionData);
+    handleCloseModal();
+  };
+
   return (
-    <>
-      <div className={styled.pageContainer}>
-        <div className={styled.header}>
-          <AddTransactionButton onClick={openModal} />
-          <h1 className={styled.title}>تراکنش ها</h1>
-        </div>
-
-        <TransactionsTable transactions={transactions} onDelete={onDelete} />
-
-        {isModalOpen && (
-          <AddTransactionModal onClose={closeModal} onAdd={addTransaction} />
-        )}
+    <div className={styled.pageContainer}>
+      <div className={styled.header}>
+        <AddTransactionButton onClick={handleOpenModal} />
+        <h1 className={styled.title}>تراکنش ها</h1>
       </div>
-    </>
+
+      <TransactionsTable
+        transactions={transactions}
+        onDelete={deleteTransaction}
+      />
+
+      {isModalOpen && (
+        <AddTransactionModal
+          onClose={handleCloseModal}
+          onAdd={handleAddTransaction}
+        />
+      )}
+    </div>
   );
 }
+
 export default ExpensesPage;
