@@ -6,7 +6,7 @@ import AddTransactionModal from "../../components/AddTransactionsModal/AddTransa
 import styled from "./expensesPage.module.css";
 function ExpensesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { transactions, addTransaction, deleteTransaction } = useTransactions();
+  const { addTransaction } = useTransactions();
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -17,16 +17,15 @@ function ExpensesPage() {
   };
 
   return (
-    <div className={styled.pageContainer}>
-      <div className={styled.header}>
-        <AddTransactionButton onClick={handleOpenModal} />
-        <h1 className={styled.title}>تراکنش ها</h1>
-      </div>
+    <>
+      <div className={styled.pageContainer}>
+        <div className={styled.header}>
+          <AddTransactionButton onClick={handleOpenModal} />
+          <h1 className={styled.title}>تراکنش ها</h1>
+        </div>
 
-      <TransactionsTable
-        transactions={transactions}
-        onDelete={deleteTransaction}
-      />
+        <TransactionsTable />
+      </div>
 
       {isModalOpen && (
         <AddTransactionModal
@@ -34,7 +33,7 @@ function ExpensesPage() {
           onAdd={handleAddTransaction}
         />
       )}
-    </div>
+    </>
   );
 }
 

@@ -3,10 +3,11 @@ import styled from "./transactionsTable.module.css";
 import TableHeader from "../TableHeader/TableHeader";
 
 import TransactionsRow from "../TransactionRow/TransactionsRow";
-
+import { useTransactions } from "../../Context/TransactionContext";
 import ExclamationIcon from "../Icons/ExclamationIcon";
 
-function TransactionsTable({ transactions = [], onDelete }) {
+function TransactionsTable() {
+  const { transactions, deleteTransaction } = useTransactions();
   const hasTransactions = transactions.length > 0;
   return (
     <div className={styled.container}>
@@ -17,7 +18,7 @@ function TransactionsTable({ transactions = [], onDelete }) {
           <TransactionsRow
             key={item.id || `transaction-${index}`}
             data={item}
-            onDelete={onDelete}
+            onDelete={deleteTransaction}
           />
         ))
       ) : (
