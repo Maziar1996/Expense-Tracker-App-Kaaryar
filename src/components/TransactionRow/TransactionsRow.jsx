@@ -1,7 +1,7 @@
 import styled from "./transactionsRow.module.css";
-import { formatNumber } from "../../../utils/formatNumber";
-import { formatPersianDate } from "../../../utils/formatPersainDate";
-import DeleteButton from "../deleteButton/DeleteButton";
+import { formatNumber } from "../../utils/formatNumber";
+import { formatPersianDate } from "../../utils/formatPersainDate";
+import DeleteButton from "../DeleteButton/DeleteButton";
 
 function TransactionsRow({ data, onDelete }) {
   const isIncome = data.type === "income";

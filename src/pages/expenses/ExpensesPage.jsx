@@ -1,8 +1,8 @@
-import TransactionsTable from "../components/transactions/transactionsTable/TransactionsTable";
-import AddTransactionButton from "../components/transactions/addTransactionButton/AddTransactionButton";
-import AddTransactionModal from "../components/transactions/addTransactionModal/AddTransactionModal";
-import styled from "./transactionsPage.module.css";
-function TransactionsPage({
+import TransactionsTable from "../../components/TransactionTable/TransactionsTable";
+import AddTransactionButton from "../../components/AddTransactionsButton/AddTransactionButton";
+import AddTransactionModal from "../../components/AddTransactionsModal/AddTransactionModal";
+import styled from "./expensesPage.module.css";
+function ExpensesPage({
   transactions,
   isModalOpen,
   openModal,
@@ -27,4 +27,4 @@ function TransactionsPage({
     </>
   );
 }
-export default TransactionsPage;
+export default ExpensesPage;

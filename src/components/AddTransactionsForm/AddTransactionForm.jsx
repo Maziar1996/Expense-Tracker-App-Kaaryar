@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "./addTransactionForm.module.css";
-import { toPersianNumber } from "../../../utils/numberUtils";
+import { toPersianNumber } from "../../utils/numberUtils";
 import {
   formatPersianDate,
   sanitizePersianDateTyping,
-} from "../../../utils/formatPersainDate";
-import CalendarIcon from "../../icons/CalendarIcon";
+} from "../../utils/formatPersainDate";
+import CalendarIcon from "../Icons/CalendarIcon";
 function AddTransactionForm({ onAdd, onCancel }) {
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
@@ -27,8 +27,6 @@ function AddTransactionForm({ onAdd, onCancel }) {
       if (+m < 1 || +m > 12) newErrors.date = "ماه نامعتبر است";
       if (+d < 1 || +d > 31) newErrors.date = "روز نامعتبر است";
     }
-
-    if (!date.trim()) newErrors.date = "تاریخ را وارد کنید";
 
     if (!amount.trim()) newErrors.amount = "مبلغ را وارد کنید";
     else if (
