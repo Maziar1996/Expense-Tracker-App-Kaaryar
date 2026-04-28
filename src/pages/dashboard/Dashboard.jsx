@@ -1,23 +1,96 @@
-import { useTransactions } from "../../Context/TransactionContext";
 import { useMemo } from "react";
+import { useTransactions } from "../../Context/TransactionContext";
+import ExclamationIcon from "../../components/Icons/ExclamationIcon";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+} from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
 import styled from "./dashboard.module.css";
+
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title
+);
 
 function Dashboard() {
   const { transactions } = useTransactions();
 
-  const totalIncome = useMemo(() => {
-    return transactions
-      .filter(t => t.type === "income")
-      .reduce((sum, t) => sum + Number(t.amount), 0);
-  }, [transactions]);
+  const totalIncome = useMemo(
+    () =>
+      transactions
+        .filter(t => t.type === "income")
+        .reduce((sum, t) => sum + Number(t.amount), 0),
+    [transactions]
+  );
 
-  const totalExpense = useMemo(() => {
-    return transactions
-      .filter(t => t.type === "expense")
-      .reduce((sum, t) => sum + Number(t.amount), 0);
-  }, [transactions]);
+  const totalExpense = useMemo(
+    () =>
+      transactions
+        .filter(t => t.type === "expense")
+        .reduce((sum, t) => sum + Number(t.amount), 0),
+    [transactions]
+  );
 
   const balance = totalIncome - totalExpense;
+
+  const pieChartData = useMemo(
+    () => ({
+      labels: ["درآمد", "هزینه"],
+      datasets: [
+        {
+          data: [totalIncome, totalExpense],
+          backgroundColor: ["#22c55e", "#ef4444"],
+          borderColor: ["#ffffff", "#ffffff"],
+          borderWidth: 2,
+        },
+      ],
+    }),
+    [totalIncome, totalExpense]
+  );
+
+  const pieChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom",
+        rtl: true,
+        labels: {
+          font: {
+            family: "Vazirmatn",
+            size: 14,
+          },
+          padding: 15,
+          usePointStyle: true,
+          pointStyle: "rectRounded",
+        },
+      },
+      tooltip: {
+        rtl: true,
+        textDirection: "rtl",
+        callbacks: {
+          label: function (context) {
+            const value = context.parsed;
+            const total = totalIncome + totalExpense;
+            const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+            return `${context.label}: ${value.toLocaleString("fa-IR")} تومان (${percent}%)`;
+          },
+        },
+      },
+    },
+  };
 
   const monthlyData = useMemo(() => {
     const groups = {};
@@ -27,7 +100,12 @@ function Dashboard() {
       const key = `${year}/${month}`;
 
       if (!groups[key]) {
-        groups[key] = { income: 0, expense: 0 };
+        groups[key] = {
+          name: key,
+          income: 0,
+          expense: 0,
+          sortKey: Number(year) * 100 + Number(month),
+        };
       }
 
       if (t.type === "income") {
@@ -37,113 +115,133 @@ function Dashboard() {
       }
     });
 
-    return Object.keys(groups)
-      .map(key => ({
-        month: key,
-        income: groups[key].income,
-        expense: groups[key].expense,
-      }))
-      .sort((a, b) => a.month.localeCompare(b.month));
+    return Object.values(groups).sort((a, b) => a.sortKey - b.sortKey);
   }, [transactions]);
 
-  const totalAll = totalIncome + totalExpense;
-  const incomePercent =
-    totalAll > 0 ? Math.round((totalIncome / totalAll) * 100) : 0;
-  const expensePercent = 100 - incomePercent;
+  const barChartData = useMemo(
+    () => ({
+      labels: monthlyData.map(item => item.name),
+      datasets: [
+        {
+          label: "درآمد",
+          data: monthlyData.map(item => item.income),
+          backgroundColor: "#22c55e",
+          borderRadius: 6,
+        },
+        {
+          label: "هزینه",
+          data: monthlyData.map(item => item.expense),
+          backgroundColor: "#ef4444",
+          borderRadius: 6,
+        },
+      ],
+    }),
+    [monthlyData]
+  );
+
+  const barChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom",
+        rtl: true,
+        labels: {
+          font: {
+            family: "Vazirmatn",
+            size: 14,
+          },
+          padding: 15,
+          usePointStyle: true,
+          pointStyle: "rectRounded",
+        },
+      },
+      tooltip: {
+        rtl: true,
+        textDirection: "rtl",
+        callbacks: {
+          label: function (context) {
+            return `${context.dataset.label}: ${context.parsed.y.toLocaleString("fa-IR")} تومان`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            family: "Vazirmatn",
+            size: 12,
+          },
+        },
+      },
+      y: {
+        ticks: {
+          font: {
+            family: "Vazirmatn",
+            size: 12,
+          },
+          callback: function (value) {
+            return value.toLocaleString("fa-IR");
+          },
+        },
+      },
+    },
+  };
+
+  const hasData = transactions.length > 0;
 
   return (
     <div className={styled.container}>
       <h1 className={styled.title}>داشبورد</h1>
 
+      {/* کارت‌های خلاصه */}
       <div className={styled.cards}>
-        <div className={styled.card} style={{ borderColor: "#22c55e" }}>
+        <div className={styled.card} data-type="income">
           <span>مجموع درآمد</span>
-          <span className={styled.amount}>
-            {totalIncome.toLocaleString("fa-IR")} تومان
-          </span>
+          <strong>{totalIncome.toLocaleString("fa-IR")} تومان</strong>
         </div>
 
-        <div className={styled.card} style={{ borderColor: "#ef4444" }}>
+        <div className={styled.card} data-type="expense">
           <span>مجموع هزینه</span>
-          <span className={styled.amount}>
-            {totalExpense.toLocaleString("fa-IR")} تومان
-          </span>
+          <strong>{totalExpense.toLocaleString("fa-IR")} تومان</strong>
         </div>
 
         <div
           className={styled.card}
-          style={{ borderColor: balance >= 0 ? "#3b82f6" : "#ef4444" }}
+          data-type={balance >= 0 ? "positive" : "negative"}
         >
           <span>تراز نهایی</span>
-          <span
-            className={styled.amount}
-            style={{ color: balance >= 0 ? "#22c55e" : "#ef4444" }}
-          >
-            {balance.toLocaleString("fa-IR")} تومان
+          <strong>{balance.toLocaleString("fa-IR")} تومان</strong>
+        </div>
+      </div>
+
+      {hasData ? (
+        <>
+          {/* نمودار Pie */}
+          <div className={styled.chartSection}>
+            <h2>نسبت درآمد به هزینه</h2>
+            <div className={styled.chartWrapper} style={{ height: "400px" }}>
+              <Pie data={pieChartData} options={pieChartOptions} />
+            </div>
+          </div>
+
+          {/* نمودار Bar */}
+          <div className={styled.chartSection}>
+            <h2>خلاصه ماهانه</h2>
+            <div className={styled.chartWrapper} style={{ height: "350px" }}>
+              <Bar data={barChartData} options={barChartOptions} />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className={styled.emptyMessage}>
+          <span>
+            <ExclamationIcon />
           </span>
+          شما هنوز هیچ تراکنشی وارد نکرده اید.
         </div>
-      </div>
-
-      <div className={styled.chartSection}>
-        <h2>نسبت درآمد به هزینه</h2>
-        <div className={styled.pieContainer}>
-          <div
-            className={styled.pie}
-            style={{
-              background: `conic-gradient(#22c55e 0% ${incomePercent}%, #ef4444 ${incomePercent}% 100%)`,
-            }}
-          />
-          <div className={styled.pieCenter}>
-            <div>کل: {totalAll.toLocaleString("fa-IR")}</div>
-          </div>
-        </div>
-        <div className={styled.pieLegend}>
-          <div>
-            <span className={styled.legendIncome} /> درآمد {incomePercent}%
-          </div>
-          <div>
-            <span className={styled.legendExpense} /> هزینه {expensePercent}%
-          </div>
-        </div>
-      </div>
-
-      <div className={styled.monthlySection}>
-        <h2>خلاصه ماهانه</h2>
-        {monthlyData.length > 0 ? (
-          <div className={styled.bars}>
-            {monthlyData.map((m, i) => {
-              const max =
-                Math.max(
-                  ...monthlyData.map(d => Math.max(d.income, d.expense))
-                ) || 1;
-              const incomeH = (m.income / max) * 100;
-              const expenseH = (m.expense / max) * 100;
-
-              return (
-                <div key={i} className={styled.barGroup}>
-                  <div className={styled.barLabel}>{m.month}</div>
-                  <div className={styled.barContainer}>
-                    <div
-                      className={styled.incomeBar}
-                      style={{ height: `${incomeH}%` }}
-                    />
-                    <div
-                      className={styled.expenseBar}
-                      style={{ height: `${expenseH}%` }}
-                    />
-                  </div>
-                  <div className={styled.barValues}>
-                    <span>+{m.income.toLocaleString("fa-IR")}</span>
-                    <span>-{m.expense.toLocaleString("fa-IR")}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <p className={styled.empty}>هنوز تراکنشی ثبت نشده است.</p>
-        )}
-      </div>
+      )}
     </div>
   );
 }
