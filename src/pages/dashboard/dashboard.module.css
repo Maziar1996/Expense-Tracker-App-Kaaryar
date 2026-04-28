@@ -1,20 +1,152 @@
 .container {
-  width: 812px;
-  text-align: right;
-  padding: 36px 24px;
-  font-size: 20px;
-  font-weight: 600;
-  top: 15%;
-  left: 50%;
-  border-radius: 16px;
-  transform: translateX(-50%);
-  color: #242d35;
-  position: absolute;
+  width: 816px;
+  margin: 40px auto 0;
+  padding: 24px;
   background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #242d35;
+  margin-bottom: 32px;
+  text-align: right;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card span:first-child {
+  display: block;
+  font-size: 15px;
+  color: #64748b;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.card strong {
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card[data-type="income"] strong {
+  color: #22c55e;
+}
+
+.card[data-type="expense"] strong {
+  color: #ef4444;
+}
+
+.card[data-type="positive"] strong {
+  color: #3b82f6;
+}
+
+.card[data-type="negative"] strong {
+  color: #ef4444;
+}
+
+.chartSection {
+  margin: 48px 0;
+  background: #f8fafc;
+  padding: 28px 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.chartSection h2 {
+  margin: 0 0 24px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: right;
+}
+
+.chartWrapper {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+}
+
+.chartWrapper canvas {
+  max-width: 100%;
+  height: auto !important;
 }
 
 @media (max-width: 768px) {
   .container {
-    width: 420px;
+    width: 95%;
+    margin: 24px auto;
+    padding: 20px 16px;
   }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chartSection {
+    padding: 20px 16px;
+    margin: 32px 0;
+  }
+
+  .chartWrapper {
+    height: 320px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .chartSection h2 {
+    font-size: 1.125rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .chartWrapper {
+    height: 280px;
+  }
+
+  .card strong {
+    font-size: 1.6rem;
+  }
+}
+
+.emptyMessage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: none;
+  text-align: center;
+  padding: 60px 20px;
+  color: #777;
+  font-size: 18px;
 }

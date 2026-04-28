@@ -1,10 +1,9 @@
 import styled from "./notFound.module.css";
 import NotFoundIcon from "../../components/Icons/404Icon";
-import Header from "../../components/Header/Header";
+
 function NotFound() {
   return (
     <>
-      <Header />
       <div className={styled.container}>
         <NotFoundIcon />
         <h2>صفحه مورد نظر یافت نشد!</h2>
