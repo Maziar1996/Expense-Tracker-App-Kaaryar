@@ -195,7 +195,7 @@ function Dashboard() {
     <div className={styled.container}>
       <h1 className={styled.title}>داشبورد</h1>
 
-      {/* کارت‌های خلاصه */}
+     
       <div className={styled.cards}>
         <div className={styled.card} data-type="income">
           <span>مجموع درآمد</span>
@@ -218,7 +218,7 @@ function Dashboard() {
 
       {hasData ? (
         <>
-          {/* نمودار Pie */}
+          
           <div className={styled.chartSection}>
             <h2>نسبت درآمد به هزینه</h2>
             <div className={styled.chartWrapper} style={{ height: "400px" }}>
@@ -226,7 +226,7 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* نمودار Bar */}
+         
           <div className={styled.chartSection}>
             <h2>خلاصه ماهانه</h2>
             <div className={styled.chartWrapper} style={{ height: "350px" }}>
