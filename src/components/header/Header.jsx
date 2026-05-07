@@ -1,15 +1,15 @@
 import { NavLink } from "react-router-dom";
-import LogoIcon from "../Icons/LogoIcon";
-import LogoText from "../Icons/LogoText";
-import styled from "./header.module.css";
+import Icon from "../../assets/svgs/Icon";
+import styled from "./Header.module.css";
 function Header() {
   return (
     <header className={styled.header}>
       <nav className={styled.nav}>
         <div className={styled.logo}>
-          <LogoIcon />
-          <LogoText />
+          <Icon name="LogoIcon" className={styled.logoIcon} />
+          <Icon name="LogoText" className={styled.logoText} />
         </div>
+
         <div className={styled.navBar}>
           <ul className={styled.navList}>
             <li>

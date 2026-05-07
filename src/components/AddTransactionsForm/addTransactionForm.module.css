@@ -43,15 +43,15 @@ input:focus {
 }
 .calendarIcon {
   position: absolute;
-  border: none;
-  background: transparent;
-  top: 50%;
+  top: 19%;
   left: 10px;
-  transform: translateY(-40%);
-  pointer-events: auto;
   cursor: pointer;
-  z-index: 2;
+  z-index: 202;
 }
+.calendarIcon:hover {
+  opacity: 0.7;
+}
+
 .radioGroup {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -94,7 +94,7 @@ input:focus {
   cursor: pointer;
 }
 .submitBtn {
-  width: 58px;
+  min-width: 58px;
   height: 32px;
   padding: 0px 16px;
   background: #0e33f3;
@@ -141,4 +141,28 @@ input:focus {
     font-size: 12px;
     bottom: -20px;
   }
+}
+
+.calendarDropdown :global(.Calendar) {
+  font-family: "Vazir", "Tahoma", sans-serif;
+  box-shadow: none;
+  border: 1px solid #e0e0e0;
+}
+
+.calendarDropdown :global(.Calendar__day) {
+  font-size: 14px;
+}
+
+.calendarDropdown :global(.Calendar__weekDay) {
+  color: #666;
+  font-size: 12px;
+}
+
+.calendarDropdown :global(.Calendar__day.-selected) {
+  background-color: #007bff;
+  color: white;
+}
+
+.calendarDropdown :global(.Calendar__day:hover) {
+  background-color: #e3f2fd;
 }

@@ -1,11 +1,12 @@
-import styled from "./notFound.module.css";
-import NotFoundIcon from "../../components/Icons/404Icon";
+import Icon from "../../assets/svgs/Icon";
+import styled from "./NotFound.module.css";
 
 function NotFound() {
   return (
     <>
       <div className={styled.container}>
-        <NotFoundIcon />
+        <Icon name="NotFound404Icon" className={styled.notFoundIcon} />
+
         <h2>صفحه مورد نظر یافت نشد!</h2>
       </div>
     </>

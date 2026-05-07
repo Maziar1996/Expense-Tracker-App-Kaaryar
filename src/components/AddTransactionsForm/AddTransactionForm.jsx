@@ -1,18 +1,44 @@
 import { useState } from "react";
-import styled from "./addTransactionForm.module.css";
 import { toPersianNumber } from "../../utils/numberUtils";
+import { useCalendar } from "../../hooks/useCalendar";
+import CalendarPicker from "../CalendarPicker/CalendarPicker";
 import {
   formatPersianDate,
   sanitizePersianDateTyping,
 } from "../../utils/formatPersainDate";
-import CalendarIcon from "../Icons/CalendarIcon";
-function AddTransactionForm({ onAdd, onCancel }) {
-  const [date, setDate] = useState("");
-  const [amount, setAmount] = useState("");
-  const [type, setType] = useState("income");
-  const [description, setDescription] = useState("");
+import Icon from "../../assets/svgs/Icon";
+import styled from "./AddTransactionForm.module.css";
+
+function AddTransactionForm({
+  onAdd,
+  onCancel,
+  initialData = null,
+  isEditMode = false,
+}) {
+  const [date, setDate] = useState(() => initialData?.date || "");
+  const [amount, setAmount] = useState(() => String(initialData?.amount || ""));
+  const [type, setType] = useState(() => initialData?.type || "income");
+  const [description, setDescription] = useState(
+    () => initialData?.description || ""
+  );
   const [errors, setErrors] = useState({});
 
+  const {
+    showCalendar,
+    calendarWrapperRef,
+    toggleCalendar,
+    handleDateSelect,
+    parseDateString,
+  } = useCalendar(newDate => {
+    setDate(newDate);
+    setErrors(prev => ({ ...prev, date: undefined }));
+  });
+
+  const handleDateInputChange = e => {
+    const cleaned = sanitizePersianDateTyping(e.target.value);
+    if (cleaned.length > 10) return;
+    setDate(cleaned);
+  };
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -21,7 +47,7 @@ function AddTransactionForm({ onAdd, onCancel }) {
     if (!date.trim()) {
       newErrors.date = "تاریخ را وارد کنید";
     } else if (!/^\d{4}\/\d{1,2}\/\d{1,2}$/.test(date)) {
-      newErrors.date = "فرمت تاریخ باید 1404/6/20 باشد";
+      newErrors.date = "فرمت تاریخ باید 1405/01/01 باشد";
     } else {
       const [, m, d] = date.split("/");
       if (+m < 1 || +m > 12) newErrors.date = "ماه نامعتبر است";
@@ -43,19 +69,25 @@ function AddTransactionForm({ onAdd, onCancel }) {
 
     setErrors({});
 
-    const newTransaction = {
+    const transactionData = {
       date,
       amount: Number(amount.replace(/,/g, "")),
       type,
       description,
     };
 
-    onAdd(newTransaction);
+    if (isEditMode && initialData?.id) {
+      transactionData.id = initialData.id;
+    }
 
-    setDate("");
-    setAmount("");
-    setDescription("");
-    setType("income");
+    onAdd(transactionData);
+
+    if (!isEditMode) {
+      setDate("");
+      setAmount("");
+      setDescription("");
+      setType("income");
+    }
   };
 
   return (
@@ -68,18 +100,28 @@ function AddTransactionForm({ onAdd, onCancel }) {
           <input
             type="text"
             id="inputDate"
+            autoComplete="off"
             value={formatPersianDate(date)}
-            onChange={e => {
-              const cleaned = sanitizePersianDateTyping(e.target.value);
-              if (cleaned.length > 10) return;
-              setDate(cleaned);
-            }}
+            onChange={handleDateInputChange}
             className={styled.input}
             placeholder=""
           />
-          <button type="button" className={styled.calendarIcon}>
-            <CalendarIcon />
+
+          <button
+            type="button"
+            onClick={toggleCalendar}
+            aria-label="انتخاب تاریخ از تقویم"
+          >
+            <Icon name="CalendarIcon" className={styled.calendarIcon} />
           </button>
+
+          {showCalendar && (
+            <CalendarPicker
+              value={parseDateString(date)}
+              onChange={handleDateSelect}
+              wrapperRef={calendarWrapperRef}
+            />
+          )}
           {errors.date && (
             <span className={styled.errorText}>{errors.date}</span>
           )}
@@ -95,6 +137,7 @@ function AddTransactionForm({ onAdd, onCancel }) {
             type="text"
             inputMode="numeric"
             id="inputAmount"
+            autoComplete="off"
             value={toPersianNumber(amount)}
             onChange={e => {
               const englishOnly = e.target.value
@@ -151,7 +194,7 @@ function AddTransactionForm({ onAdd, onCancel }) {
           انصراف
         </button>
         <button type="submit" className={styled.submitBtn}>
-          ثبت
+          {isEditMode ? "ثبت تغییرات" : "ثبت"}
         </button>
       </div>
     </form>

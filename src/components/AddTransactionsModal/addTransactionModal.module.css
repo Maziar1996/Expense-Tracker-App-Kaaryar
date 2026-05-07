@@ -1,14 +1,13 @@
 .overlay {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 10;
   backdrop-filter: blur(1px);
+  animation: fadeIn 0.2s ease-out;
 }
 
 .modal {
@@ -44,7 +43,13 @@
   border: none;
   cursor: pointer;
 }
-@media (max-width: 768px) {
+
+@media (max-width: 1000px) {
+  .overlay {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 805px) {
   .overlay {
     align-items: flex-end;
   }
@@ -68,6 +73,7 @@
   }
   .line {
     display: flex;
+    cursor: pointer;
   }
 }
 @media (max-width: 380px) {
@@ -81,5 +87,14 @@
   }
   to {
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

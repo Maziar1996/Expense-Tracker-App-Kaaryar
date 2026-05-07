@@ -2,6 +2,7 @@ import { createContext, useReducer, useContext, useEffect } from "react";
 
 const ADD_TRANSACTION = "ADD_TRANSACTION";
 const DELETE_TRANSACTION = "DELETE_TRANSACTION";
+const UPDATE_TRANSACTION = "UPDATE_TRANSACTION";
 const STORAGE_KEY = "expense-tracker-transactions";
 
 const initialState = {
@@ -25,6 +26,16 @@ function transactionReducer(state, action) {
         ...state,
         transactions: state.transactions.filter(t => t.id !== action.payload),
       };
+    case UPDATE_TRANSACTION:
+      return {
+        ...state,
+        transactions: state.transactions.map(transaction =>
+          transaction.id === action.payload.id
+            ? { ...transaction, ...action.payload.data }
+            : transaction
+        ),
+      };
+
     default:
       return state;
   }
@@ -71,6 +82,12 @@ export function TransactionProvider({ children }) {
       dispatch({ type: ADD_TRANSACTION, payload: newTransaction }),
     deleteTransaction: id =>
       dispatch({ type: DELETE_TRANSACTION, payload: id }),
+
+    updateTransaction: (id, updatedData) =>
+      dispatch({
+        type: UPDATE_TRANSACTION,
+        payload: { id, data: updatedData },
+      }),
   };
   return (
     <TransactionContext.Provider value={value}>
