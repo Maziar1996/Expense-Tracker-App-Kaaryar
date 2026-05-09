@@ -1,17 +1,12 @@
 import { useEffect } from "react";
-import AddTransactionForm from "../AddTransactionsForm/AddTransactionForm";
 import Buttons from "../Buttons/Buttons";
 import Icon from "../../assets/svgs/Icon";
-import styled from "./AddTransactionModal.module.css";
+import styled from "./TransactionModal.module.css";
 
-function AddTransactionModal({
-  onClose,
-  onAdd,
-  initialData = null,
-  isEditMode = false,
-}) {
+function TransactionModal({ title, onClose, children }) {
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     const handleEsc = e => {
@@ -29,27 +24,23 @@ function AddTransactionModal({
     <div className={styled.overlay}>
       <div className={styled.modal} onClick={e => e.stopPropagation()}>
         <div className={styled.line} onClick={onClose}></div>
+
         <div className={styled.header}>
-          <h2 className={styled.modalTitle}>
-            {isEditMode ? "ویرایش تراکنش" : "افزودن تراکنش"}
-          </h2>
+          <h2 className={styled.modalTitle}>{title}</h2>
 
           <Buttons
             onClick={onClose}
-            title={""}
-            label={"بستن"}
+            title=""
+            label="بستن"
             style={styled.closeBtn}
             icon={<Icon name="CloseIcon" />}
           />
         </div>
-        <AddTransactionForm
-          onAdd={onAdd}
-          onCancel={onClose}
-          initialData={initialData}
-          isEditMode={isEditMode}
-        />
+
+        {children}
       </div>
     </div>
   );
 }
-export default AddTransactionModal;
+
+export default TransactionModal;

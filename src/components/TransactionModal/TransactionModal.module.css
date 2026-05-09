@@ -18,6 +18,7 @@
   padding: 30px;
   box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.15);
 }
+
 .line {
   display: flex;
   margin: 0px auto 25px;
@@ -26,6 +27,7 @@
   border-radius: 5px;
   display: none;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -38,6 +40,7 @@
   font-size: 16px;
   font-weight: 500;
 }
+
 .closeBtn {
   background: none;
   border: none;
@@ -49,6 +52,7 @@
     margin-top: 20px;
   }
 }
+
 @media (max-width: 805px) {
   .overlay {
     align-items: flex-end;
@@ -76,11 +80,13 @@
     cursor: pointer;
   }
 }
+
 @media (max-width: 380px) {
   .modal {
     width: 100%;
   }
 }
+
 @keyframes slideUp {
   from {
     transform: translateY(100%);

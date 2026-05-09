@@ -1,37 +1,30 @@
 import { useState } from "react";
 import { useTransactions } from "../../Context/TransactionContext";
 import TransactionsTable from "../../components/TransactionTable/TransactionsTable";
-import AddTransactionModal from "../../components/AddTransactionsModal/AddTransactionModal";
+import AddTransactionModal from "../../components/AddTransactionModal/AddTransactionModal";
+import EditTransactionModal from "../../components/EditTransactionModal/EditTransactionModal";
 import Buttons from "../../components/Buttons/Buttons";
 import Icon from "../../assets/svgs/Icon";
 import styled from "./ExpensesPage.module.css";
+
 function ExpensesPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+
   const [editingTransaction, setEditingTransaction] = useState(null);
+
   const { transactions, addTransaction, deleteTransaction, updateTransaction } =
     useTransactions();
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const handleAdd = newTransaction => {
+    addTransaction(newTransaction);
+  };
 
-  const handleAddTransaction = newTransactionData => {
-    addTransaction(newTransactionData);
-    handleCloseModal();
+  const handleUpdate = updatedTransaction => {
+    updateTransaction(updatedTransaction.id, updatedTransaction);
   };
 
   const handleOpenEditModal = transaction => {
     setEditingTransaction(transaction);
-    setIsEditModalOpen(true);
-  };
-
-  const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
-    setEditingTransaction(null);
-  };
-  const handleEditTransaction = updatedData => {
-    updateTransaction(editingTransaction.id, updatedData);
-    handleCloseEditModal();
   };
 
   return (
@@ -39,7 +32,7 @@ function ExpensesPage() {
       <div className={styled.pageContainer}>
         <div className={styled.header}>
           <Buttons
-            onClick={handleOpenModal}
+            onClick={() => setShowAddModal(true)}
             title={"افزودن تراکنش"}
             label={"افزودن تراکنش"}
             style={styled.addTranBtn}
@@ -54,18 +47,19 @@ function ExpensesPage() {
           onEdit={handleOpenEditModal}
         />
       </div>
-      {isModalOpen && (
+
+      {showAddModal && (
         <AddTransactionModal
-          onClose={handleCloseModal}
-          onAdd={handleAddTransaction}
+          onClose={() => setShowAddModal(false)}
+          onAdd={handleAdd}
         />
       )}
-      {isEditModalOpen && (
-        <AddTransactionModal
-          onClose={handleCloseEditModal}
-          onAdd={handleEditTransaction}
-          initialData={editingTransaction}
-          isEditMode={true}
+
+      {editingTransaction && (
+        <EditTransactionModal
+          onClose={() => setEditingTransaction(null)} //
+          onUpdate={handleUpdate}
+          transaction={editingTransaction}
         />
       )}
     </>

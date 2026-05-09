@@ -7,13 +7,13 @@ import {
   sanitizePersianDateTyping,
 } from "../../utils/formatPersainDate";
 import Icon from "../../assets/svgs/Icon";
-import styled from "./AddTransactionForm.module.css";
+import styled from "./TransactionForm.module.css";
 
-function AddTransactionForm({
-  onAdd,
+function TransactionForm({
+  onSubmit,
   onCancel,
   initialData = null,
-  isEditMode = false,
+  submitButtonText = "ثبت",
 }) {
   const [date, setDate] = useState(() => initialData?.date || "");
   const [amount, setAmount] = useState(() => String(initialData?.amount || ""));
@@ -36,9 +36,10 @@ function AddTransactionForm({
 
   const handleDateInputChange = e => {
     const cleaned = sanitizePersianDateTyping(e.target.value);
-    if (cleaned.length > 10) return;
+    if (cleaned.length > 10) return; //
     setDate(cleaned);
   };
+
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -54,8 +55,9 @@ function AddTransactionForm({
       if (+d < 1 || +d > 31) newErrors.date = "روز نامعتبر است";
     }
 
-    if (!amount.trim()) newErrors.amount = "مبلغ را وارد کنید";
-    else if (
+    if (!amount.trim()) {
+      newErrors.amount = "مبلغ را وارد کنید";
+    } else if (
       isNaN(amount.replace(/,/g, "")) ||
       Number(amount.replace(/,/g, "")) <= 0
     ) {
@@ -76,18 +78,7 @@ function AddTransactionForm({
       description,
     };
 
-    if (isEditMode && initialData?.id) {
-      transactionData.id = initialData.id;
-    }
-
-    onAdd(transactionData);
-
-    if (!isEditMode) {
-      setDate("");
-      setAmount("");
-      setDescription("");
-      setType("income");
-    }
+    onSubmit(transactionData);
   };
 
   return (
@@ -105,6 +96,7 @@ function AddTransactionForm({
             onChange={handleDateInputChange}
             className={styled.input}
             placeholder=""
+            onClick={toggleCalendar}
           />
 
           <button
@@ -152,6 +144,7 @@ function AddTransactionForm({
           )}
         </div>
       </div>
+
       <div className={styled.radioGroup}>
         <label className={styled.label}>نوع تراکنش</label>
         <label className={styled.radioLabel}>
@@ -175,6 +168,7 @@ function AddTransactionForm({
           <span>هزینه</span>
         </label>
       </div>
+
       <div className={styled.transDesc}>
         <label htmlFor="descriptionInput" className={styled.label}>
           شرح
@@ -194,10 +188,11 @@ function AddTransactionForm({
           انصراف
         </button>
         <button type="submit" className={styled.submitBtn}>
-          {isEditMode ? "ثبت تغییرات" : "ثبت"}
+          {submitButtonText}
         </button>
       </div>
     </form>
   );
 }
-export default AddTransactionForm;
+
+export default TransactionForm;
