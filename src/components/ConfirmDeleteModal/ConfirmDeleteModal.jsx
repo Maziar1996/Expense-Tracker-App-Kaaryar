@@ -37,13 +37,18 @@ function ConfirmDeleteModal({ onConfirm, onCancel }) {
           <p className={styled.message}>از حذف تراکنش اطمینان دارید؟</p>
 
           <div className={styled.buttons}>
-            <button className={styled.cancelBtn} onClick={onCancel}>
-              انصراف
-            </button>
-
-            <button className={styled.confirmBtn} onClick={onConfirm}>
-              حذف
-            </button>
+            <Buttons
+              onClick={onCancel}
+              title={"انصراف"}
+              label={"انصراف"}
+              style={styled.cancelBtn}
+            />
+            <Buttons
+              onClick={onConfirm}
+              title={"حذف"}
+              label={"حذف"}
+              style={styled.confirmBtn}
+            />
           </div>
         </div>
       </div>

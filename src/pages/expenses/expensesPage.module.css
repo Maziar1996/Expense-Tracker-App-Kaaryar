@@ -48,6 +48,19 @@
   color: #242d35;
   margin: 0;
 }
+.errorMessage,
+.successMessage {
+  background: #ef4444;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.successMessage {
+  background: #2de24b;
+}
+
 @media (max-width: 805px) {
   .header {
     padding: 16px 20px 0px;
