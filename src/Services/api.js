@@ -1,5 +1,13 @@
 const API_BASE_URL = "http://localhost:3001";
 
+const handleError = (error, persianMessage) => {
+  if (error.message === "Failed to fetch") {
+    throw new Error("اتصال به اینترنت برقرار نیست");
+  }
+
+  throw new Error(persianMessage);
+};
+
 export const fetchTransactions = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/transactions`);
@@ -7,7 +15,7 @@ export const fetchTransactions = async () => {
     return await response.json();
   } catch (error) {
     console.error("خطا در fetchTransactions:", error);
-    throw error;
+    handleError(error, "خطا در دریافت تراکنش‌ها");
   }
 };
 
@@ -22,7 +30,7 @@ export const createTransaction = async transactionData => {
     return await response.json();
   } catch (error) {
     console.error("خطا در createTransaction:", error);
-    throw error;
+    handleError(error, "خطا در ایجاد تراکنش");
   }
 };
 
@@ -37,7 +45,7 @@ export const updateTransaction = async (id, transactionData) => {
     return await response.json();
   } catch (error) {
     console.error("خطا در updateTransaction:", error);
-    throw error;
+    handleError(error, "خطا در ویرایش تراکنش");
   }
 };
 
@@ -50,6 +58,6 @@ export const deleteTransaction = async id => {
     return true;
   } catch (error) {
     console.error("خطا در deleteTransaction:", error);
-    throw error;
+    handleError(error, "خطا در حذف تراکنش");
   }
 };

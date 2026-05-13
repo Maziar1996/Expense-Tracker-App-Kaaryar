@@ -1,3 +1,5 @@
+@import url("../../assets/fonts/vazirmatn.css");
+
 .loadingPage {
   position: absolute;
   top: 0;
@@ -8,11 +10,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.text {
+  font-family: "Vazirmatn", sans-serif;
+  font-weight: 600;
+  color: #ccc;
   z-index: 100;
+  padding-right: 20px;
 }
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border: 5px solid #fff;
   border-bottom-color: #07a2eb;
   border-radius: 50%;
@@ -20,7 +30,7 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+  animation: rotation 0.7s linear infinite;
 }
 
 @keyframes rotation {

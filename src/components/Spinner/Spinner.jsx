@@ -3,6 +3,7 @@ function Spinner() {
   return (
     <div className={styled.loadingPage}>
       <span className={styled.loader}></span>
+      <span className={styled.text}>در حال بارگذاری...</span>
     </div>
   );
 }

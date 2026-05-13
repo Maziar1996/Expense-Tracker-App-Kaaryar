@@ -2,8 +2,9 @@ import {
   createContext,
   useReducer,
   useContext,
-  useEffect,
   useState,
+  useCallback,
+  useEffect,
 } from "react";
 
 import {
@@ -13,6 +14,9 @@ import {
   deleteTransaction as deleteTransactionAPI,
 } from "../Services/api";
 
+import useFetch from "../Hooks/useFetch";
+
+// Action Types
 const SET_TRANSACTIONS = "SET_TRANSACTIONS";
 const ADD_TRANSACTION = "ADD_TRANSACTION";
 const DELETE_TRANSACTION = "DELETE_TRANSACTION";
@@ -70,10 +74,37 @@ export function useTransactions() {
 export function TransactionProvider({ children }) {
   const [state, dispatch] = useReducer(transactionReducer, initialState);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  const {
+    data: fetchedTransactions,
+    isLoading: isFetchingTransactions,
+    error: fetchError,
+  } = useFetch(fetchTransactions, true);
+
+  useEffect(() => {
+    if (fetchedTransactions) {
+      dispatch({ type: SET_TRANSACTIONS, payload: fetchedTransactions });
+    }
+  }, [fetchedTransactions]);
+
+  const {
+    isLoading: isCreating,
+    error: createError,
+    execute: executeCreate,
+  } = useFetch(createTransaction, false);
+
+  const {
+    isLoading: isUpdating,
+    error: updateError,
+    execute: executeUpdate,
+  } = useFetch(updateTransactionAPI, false);
+
+  const {
+    isLoading: isDeleting,
+    error: deleteError,
+    execute: executeDelete,
+  } = useFetch(deleteTransactionAPI, false);
 
   const showSuccess = message => {
     setSuccessMessage(message);
@@ -82,93 +113,69 @@ export function TransactionProvider({ children }) {
     }, 3000);
   };
 
-  useEffect(() => {
-    const loadTransactions = async () => {
+  const addTransaction = useCallback(
+    async newTransaction => {
       try {
-        setIsLoading(true);
-        setError(null);
+        const createdTransaction = await executeCreate(newTransaction);
 
-        const data = await fetchTransactions();
-        dispatch({ type: SET_TRANSACTIONS, payload: data });
+        dispatch({
+          type: ADD_TRANSACTION,
+          payload: createdTransaction,
+        });
+
+        showSuccess("تراکنش شما با موفقیت ثبت شد");
+        return createdTransaction;
       } catch (error) {
-        setError("خطا در بارگذاری تراکنش ها");
-        console.error(error);
-      } finally {
-        setIsLoading(false);
+        console.error("خطا در افزودن تراکنش:", error);
+        throw error;
       }
-    };
+    },
+    [executeCreate]
+  );
 
-    loadTransactions();
-  }, []);
+  const deleteTransaction = useCallback(
+    async id => {
+      try {
+        await executeDelete(id);
 
-  const addTransaction = async newTransaction => {
-    try {
-      setIsLoading(true);
-      setError(null);
+        dispatch({
+          type: DELETE_TRANSACTION,
+          payload: id,
+        });
 
-      const createdTransaction = await createTransaction(newTransaction);
+        showSuccess("تراکنش شما با موفقیت حذف شد");
+      } catch (error) {
+        console.error("خطا در حذف تراکنش:", error);
+        throw error;
+      }
+    },
+    [executeDelete]
+  );
 
-      dispatch({
-        type: ADD_TRANSACTION,
-        payload: createdTransaction,
-      });
+  const updateTransaction = useCallback(
+    async (id, updatedData) => {
+      try {
+        const updated = await executeUpdate(id, updatedData);
 
-      showSuccess("تراکنش شما با موفقیت ثبت شد");
+        dispatch({
+          type: UPDATE_TRANSACTION,
+          payload: { id, data: updated },
+        });
 
-      return createdTransaction;
-    } catch (error) {
-      setError("خطا در افزودن تراکنش");
-      console.error(error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        showSuccess("تراکنش شما با موفقیت ویرایش شد");
+        return updated;
+      } catch (error) {
+        console.error("خطا در ویرایش تراکنش:", error);
+        throw error;
+      }
+    },
+    [executeUpdate]
+  );
 
-  const deleteTransaction = async id => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  const isLoading =
+    isFetchingTransactions || isCreating || isUpdating || isDeleting;
 
-      await deleteTransactionAPI(id);
-
-      dispatch({
-        type: DELETE_TRANSACTION,
-        payload: id,
-      });
-      showSuccess("تراکنش شما با موفقیت حذف شد");
-    } catch (error) {
-      setError("خطا در حذف تراکنش");
-      console.error(error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const updateTransaction = async (id, updatedData) => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const updated = await updateTransactionAPI(id, updatedData);
-
-      dispatch({
-        type: UPDATE_TRANSACTION,
-        payload: { id, data: updated },
-      });
-
-      showSuccess("تراکنش شما با موفقیت ویرایش شد");
-
-      return updated;
-    } catch (error) {
-      setError("خطا در ویرایش تراکنش");
-      console.error(error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const error = fetchError || createError || updateError || deleteError;
 
   const value = {
     transactions: state.transactions,
@@ -179,6 +186,7 @@ export function TransactionProvider({ children }) {
     deleteTransaction,
     updateTransaction,
   };
+
   return (
     <TransactionContext.Provider value={value}>
       {children}
