@@ -18,16 +18,20 @@
   font-size: 1rem;
   color: #333;
 }
+
 .income {
   color: var(--green);
 }
+
 .expense {
   color: var(--red);
 }
+
 .income,
 .expense {
   font-weight: 600;
 }
+
 .currency {
   display: none;
 }
@@ -39,12 +43,14 @@
   font-weight: 600;
   color: #555;
 }
+
 .menuContainer {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .menuDropdown {
   width: 113px;
   height: 92px;
@@ -55,20 +61,31 @@
   flex-direction: column;
   gap: 4px;
   position: absolute;
-  top: 100%;
   left: 0;
   background: #ffffff;
   border: 1px solid #ddd;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 11;
+  z-index: 1000;
 }
+
+.menuDown {
+  top: 100%;
+  margin-top: 4px;
+}
+
+.menuUp {
+  bottom: 100%;
+  margin-bottom: 4px;
+}
+
 .actionMenu {
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 5px;
 }
+
 .actionMenu:hover {
   opacity: 0.8;
 }
@@ -89,13 +106,16 @@
   transition: opacity 0.2s;
   opacity: 0.9;
 }
+
 .trashBtn {
   margin: 5px 0px 0px 10px;
 }
+
 .trashBtn:hover,
 .editBtn:hover {
   opacity: 0.6;
 }
+
 @media (max-width: 768px) {
   .row {
     grid-template-columns: 2.2fr 1fr;
@@ -115,6 +135,7 @@
     display: inline;
     margin-right: 5px;
   }
+
   .dateCell {
     grid-area: date;
     font-size: 14px;
@@ -127,21 +148,26 @@
     font-weight: 600;
     text-align: left;
   }
+
   .income {
     color: var(--green);
   }
+
   .expense {
     color: var(--red);
   }
+
   .empty {
     display: none;
   }
+
   .descriptionCell {
     font-size: 15px;
     line-height: 1.6;
     margin-top: 10px;
     align-self: flex-start;
   }
+
   .actionsCell {
     grid-area: actions;
     justify-content: flex-end;

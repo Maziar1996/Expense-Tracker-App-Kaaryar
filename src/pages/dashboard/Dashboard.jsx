@@ -64,6 +64,7 @@ function Dashboard() {
   const pieChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    radius: "75%",
     plugins: {
       legend: {
         position: "bottom",
@@ -217,21 +218,21 @@ function Dashboard() {
       </div>
 
       {hasData ? (
-        <>
+        <div className={styled.chartsGrid}>
           <div className={styled.chartSection}>
             <h2>نسبت درآمد به هزینه</h2>
-            <div className={styled.chartWrapper} style={{ height: "400px" }}>
+            <div className={styled.chartWrapper}>
               <Pie data={pieChartData} options={pieChartOptions} />
             </div>
           </div>
 
           <div className={styled.chartSection}>
             <h2>خلاصه ماهانه</h2>
-            <div className={styled.chartWrapper} style={{ height: "350px" }}>
+            <div className={styled.chartWrapper}>
               <Bar data={barChartData} options={barChartOptions} />
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <div className={styled.emptyMessage}>
           <span>

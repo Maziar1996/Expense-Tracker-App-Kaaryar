@@ -1,8 +1,7 @@
 const API_BASE_URL = "http://localhost:3001";
-
 const handleError = (error, persianMessage) => {
   if (error.message === "Failed to fetch") {
-    throw new Error("اتصال به اینترنت برقرار نیست");
+    throw new Error("اتصال به اینترنت برقرار نیست، دوباره تلاش کنید");
   }
 
   throw new Error(persianMessage);

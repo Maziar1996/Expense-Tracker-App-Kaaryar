@@ -5,6 +5,7 @@ import AddTransactionModal from "../../components/AddTransactionModal/AddTransac
 import EditTransactionModal from "../../components/EditTransactionModal/EditTransactionModal";
 import Buttons from "../../components/Buttons/Buttons";
 import Spinner from "../../components/Spinner/Spinner";
+import Toast from "../../components/Toast/Toast";
 import Icon from "../../assets/svgs/Icon";
 import styled from "./ExpensesPage.module.css";
 
@@ -20,6 +21,7 @@ function ExpensesPage() {
     isLoading,
     error,
     successMessage,
+    clearMessages,
   } = useTransactions();
 
   const handleAdd = newTransaction => {
@@ -36,13 +38,14 @@ function ExpensesPage() {
 
   return (
     <>
+      <Toast
+        message={error || successMessage}
+        type={error ? "error" : "success"}
+        onClose={clearMessages}
+        duration={3000}
+      />
+
       <div className={styled.pageContainer}>
-        {error && <div className={styled.errorMessage}>{error}</div>}
-
-        {successMessage && !error && (
-          <div className={styled.successMessage}>{successMessage}</div>
-        )}
-
         <div className={styled.header}>
           <Buttons
             onClick={() => setShowAddModal(true)}

@@ -1,3 +1,5 @@
+import sprite from "./sprite.svg";
+
 const Icon = ({
   name,
   sizeW = 24,
@@ -13,8 +15,9 @@ const Icon = ({
       className={className}
       aria-hidden="true"
     >
-      <use href={`/src/assets/svgs/sprite.svg#${name}`} />
+      <use href={`${sprite}#${name}`} />
     </svg>
   );
 };
+
 export default Icon;

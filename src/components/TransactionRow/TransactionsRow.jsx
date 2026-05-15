@@ -4,19 +4,42 @@ import { useEffect, useState, useRef } from "react";
 import Buttons from "../Buttons/Buttons";
 import Icon from "../../assets/svgs/Icon";
 import styled from "./TransactionsRow.module.css";
+
 function TransactionsRow({ data, onDelete, onEdit }) {
   const isIncome = data.type === "income";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuDirection, setMenuDirection] = useState("down");
 
   const menuRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const handleEdit = () => {
     setIsMenuOpen(false);
     onEdit();
   };
+
   const handleDelete = () => {
     setIsMenuOpen(false);
     onDelete();
+  };
+
+  const calculateMenuDirection = () => {
+    if (buttonRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - buttonRect.bottom;
+      const menuHeight = 100;
+
+      return spaceBelow < menuHeight + 10 ? "up" : "down";
+    }
+    return "down";
+  };
+
+  const handleMenuToggle = () => {
+    if (!isMenuOpen) {
+      const direction = calculateMenuDirection();
+      setMenuDirection(direction);
+    }
+    setIsMenuOpen(!isMenuOpen);
   };
 
   useEffect(() => {
@@ -53,18 +76,22 @@ function TransactionsRow({ data, onDelete, onEdit }) {
 
       <div className={styled.actionsCell}>
         <div className={styled.menuContainer} ref={menuRef}>
-          <Buttons
-            onClick={() => {
-              setIsMenuOpen(!isMenuOpen);
-            }}
-            title={""}
-            label={"منو"}
-            style={styled.actionMenu}
-            icon={<Icon name="DotsVector" sizeW={5} sizeH={15} />}
-          />
+          <div ref={buttonRef}>
+            <Buttons
+              onClick={handleMenuToggle}
+              title={""}
+              label={"منو"}
+              style={styled.actionMenu}
+              icon={<Icon name="DotsVector" sizeW={5} sizeH={15} />}
+            />
+          </div>
 
           {isMenuOpen && (
-            <div className={styled.menuDropdown}>
+            <div
+              className={`${styled.menuDropdown} ${
+                menuDirection === "up" ? styled.menuUp : styled.menuDown
+              }`}
+            >
               <Buttons
                 onClick={handleEdit}
                 title={"ویرایش"}
