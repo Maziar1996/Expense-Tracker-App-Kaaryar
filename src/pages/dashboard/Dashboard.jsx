@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useTransactions } from "../../Context/TransactionContext";
-import ExclamationIcon from "../../components/Icons/ExclamationIcon";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -12,7 +11,8 @@ import {
   Title,
 } from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
-import styled from "./dashboard.module.css";
+import Icon from "../../assets/svgs/Icon";
+import styled from "./Dashboard.module.css";
 
 ChartJS.register(
   ArcElement,
@@ -54,6 +54,7 @@ function Dashboard() {
           backgroundColor: ["#22c55e", "#ef4444"],
           borderColor: ["#ffffff", "#ffffff"],
           borderWidth: 2,
+          hoverOffset: 3,
         },
       ],
     }),
@@ -195,7 +196,6 @@ function Dashboard() {
     <div className={styled.container}>
       <h1 className={styled.title}>داشبورد</h1>
 
-     
       <div className={styled.cards}>
         <div className={styled.card} data-type="income">
           <span>مجموع درآمد</span>
@@ -218,7 +218,6 @@ function Dashboard() {
 
       {hasData ? (
         <>
-          
           <div className={styled.chartSection}>
             <h2>نسبت درآمد به هزینه</h2>
             <div className={styled.chartWrapper} style={{ height: "400px" }}>
@@ -226,7 +225,6 @@ function Dashboard() {
             </div>
           </div>
 
-         
           <div className={styled.chartSection}>
             <h2>خلاصه ماهانه</h2>
             <div className={styled.chartWrapper} style={{ height: "350px" }}>
@@ -237,7 +235,7 @@ function Dashboard() {
       ) : (
         <div className={styled.emptyMessage}>
           <span>
-            <ExclamationIcon />
+            <Icon name="ExclamationIcon" />
           </span>
           شما هنوز هیچ تراکنشی وارد نکرده اید.
         </div>

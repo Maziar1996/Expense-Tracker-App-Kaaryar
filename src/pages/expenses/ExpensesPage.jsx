@@ -1,40 +1,85 @@
 import { useState } from "react";
 import { useTransactions } from "../../Context/TransactionContext";
 import TransactionsTable from "../../components/TransactionTable/TransactionsTable";
-import AddTransactionButton from "../../components/AddTransactionsButton/AddTransactionButton";
-import AddTransactionModal from "../../components/AddTransactionsModal/AddTransactionModal";
-import styled from "./expensesPage.module.css";
+import AddTransactionModal from "../../components/AddTransactionModal/AddTransactionModal";
+import EditTransactionModal from "../../components/EditTransactionModal/EditTransactionModal";
+import Buttons from "../../components/Buttons/Buttons";
+import Spinner from "../../components/Spinner/Spinner";
+import Icon from "../../assets/svgs/Icon";
+import styled from "./ExpensesPage.module.css";
+
 function ExpensesPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { transactions, addTransaction, deleteTransaction } = useTransactions();
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState(null);
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const {
+    transactions,
+    addTransaction,
+    deleteTransaction,
+    updateTransaction,
+    isLoading,
+    error,
+    successMessage,
+  } = useTransactions();
 
-  const handleAddTransaction = newTransactionData => {
-    addTransaction(newTransactionData);
-    handleCloseModal();
+  const handleAdd = newTransaction => {
+    addTransaction(newTransaction);
+  };
+
+  const handleUpdate = (id, updatedTransaction) => {
+    updateTransaction(id, updatedTransaction);
+  };
+
+  const handleOpenEditModal = transaction => {
+    setEditingTransaction(transaction);
   };
 
   return (
-    <div className={styled.pageContainer}>
-      <div className={styled.header}>
-        <AddTransactionButton onClick={handleOpenModal} />
-        <h1 className={styled.title}>تراکنش ها</h1>
+    <>
+      <div className={styled.pageContainer}>
+        {error && <div className={styled.errorMessage}>{error}</div>}
+
+        {successMessage && !error && (
+          <div className={styled.successMessage}>{successMessage}</div>
+        )}
+
+        <div className={styled.header}>
+          <Buttons
+            onClick={() => setShowAddModal(true)}
+            title={"افزودن تراکنش"}
+            label={"افزودن تراکنش"}
+            style={styled.addTranBtn}
+            icon={<Icon name="PlusIcon" />}
+          />
+          <h1 className={styled.title}>تراکنش ها</h1>
+        </div>
+
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <TransactionsTable
+            transactions={transactions}
+            onDelete={deleteTransaction}
+            onEdit={handleOpenEditModal}
+          />
+        )}
       </div>
 
-      <TransactionsTable
-        transactions={transactions}
-        onDelete={deleteTransaction}
-      />
-
-      {isModalOpen && (
+      {showAddModal && (
         <AddTransactionModal
-          onClose={handleCloseModal}
-          onAdd={handleAddTransaction}
+          onClose={() => setShowAddModal(false)}
+          onAdd={handleAdd}
         />
       )}
-    </div>
+
+      {editingTransaction && (
+        <EditTransactionModal
+          onClose={() => setEditingTransaction(null)}
+          onUpdate={handleUpdate}
+          transaction={editingTransaction}
+        />
+      )}
+    </>
   );
 }
 

@@ -1,4 +1,8 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -6,7 +10,6 @@
   padding: 0px 40px;
   height: 65px;
   background: #ffffff;
-  position: relative;
 }
 .nav {
   display: flex;
@@ -22,9 +25,13 @@
   justify-content: center;
   align-items: center;
 }
-.logo :nth-child(1) {
+.logoIcon {
   width: 32px;
   height: 32px;
+}
+.logoText {
+  width: 46px;
+  height: 15px;
 }
 .link {
   display: inline-block;
@@ -40,7 +47,6 @@
   background: #0b32f4;
   color: #ffffff;
 }
-
 .title {
   font-size: 20px;
   font-weight: 600;
