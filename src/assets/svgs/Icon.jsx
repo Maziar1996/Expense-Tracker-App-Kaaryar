@@ -6,14 +6,16 @@ const Icon = ({
   sizeH = 24,
   color = "currentColor",
   className = "",
+  fill = "",
 }) => {
   return (
     <svg
       width={sizeW}
       height={sizeH}
-      fill={color}
+      color={color}
       className={className}
       aria-hidden="true"
+      fill={fill}
     >
       <use href={`${sprite}#${name}`} />
     </svg>

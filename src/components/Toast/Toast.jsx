@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import Icon from "../../assets/svgs/Icon";
 import styled from "./Toast.module.css";
-import Buttons from "../Buttons/Buttons";
 
 function Toast({ message, type = "success", onClose, duration }) {
   useEffect(() => {

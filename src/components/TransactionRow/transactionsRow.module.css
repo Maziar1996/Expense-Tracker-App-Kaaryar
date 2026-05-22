@@ -116,7 +116,7 @@
   opacity: 0.6;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 805px) {
   .row {
     grid-template-columns: 2.2fr 1fr;
     grid-template-areas:
