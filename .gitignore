@@ -17,6 +17,8 @@ dist-ssr
 # Local files
 *.local
 ai_full_bundle.json
+.repopackignore
+repopack-output.txt
 bundle_root_project.py
 
 # Vite specific cache
