@@ -4,21 +4,26 @@
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  position: absolute;
-  top: 10%;
-  left: 0;
-  right: 0;
-  margin: 40px auto 50px auto;
+  margin: 20px auto 40px;
 }
 
 .title {
   font-size: 24px;
   font-weight: 700;
   color: #242d35;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   text-align: right;
 }
-
+.toolbar {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.toolbar input {
+  min-width: 300px;
+}
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -30,7 +35,7 @@
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: 24px 16px;
+  padding: 10px 16px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition:
@@ -53,7 +58,7 @@
 
 .card strong {
   display: block;
-  font-size: 1.9rem;
+  font-size: 1.4rem;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -73,9 +78,13 @@
 .card[data-type="negative"] strong {
   color: #ef4444;
 }
-
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
 .chartSection {
-  margin: 48px 0;
   background: #f8fafc;
   padding: 28px 24px;
   border-radius: 12px;
@@ -92,27 +101,43 @@
 
 .chartWrapper {
   width: 100%;
-  height: auto;
-  min-height: 300px;
+  height: 300px;
 }
 
 .chartWrapper canvas {
   max-width: 100%;
   height: auto !important;
 }
+.emptyMessage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: none;
+  text-align: center;
+  padding: 60px 20px;
+  color: #777;
+  font-size: 18px;
+}
 
-@media (max-width: 768px) {
+@media (max-width: 805px) {
   .container {
     width: 95%;
     margin: 24px auto;
     padding: 20px 16px;
   }
-
+  .toolbar input {
+    width: 350px;
+    min-width: 320px;
+  }
   .cards {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-
+  .chartsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
   .chartSection {
     padding: 20px 16px;
     margin: 32px 0;
@@ -137,20 +162,11 @@
   .chartWrapper {
     height: 280px;
   }
-
+  .toolbar input {
+    width: 240px;
+    min-width: 200px;
+  }
   .card strong {
     font-size: 1.6rem;
   }
-}
-
-.emptyMessage {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  pointer-events: none;
-  text-align: center;
-  padding: 60px 20px;
-  color: #777;
-  font-size: 18px;
 }

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTransactions } from "../../Context/TransactionContext";
 import {
   Chart as ChartJS,
@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
 import Icon from "../../assets/svgs/Icon";
+import FilterToolbar from "../../components/FilterToolbar/FilterToolbar";
 import styled from "./Dashboard.module.css";
 
 ChartJS.register(
@@ -27,20 +28,66 @@ ChartJS.register(
 function Dashboard() {
   const { transactions } = useTransactions();
 
+  const [filters, setFilters] = useState({
+    fromDate: "",
+    toDate: "",
+    type: "all",
+  });
+
+  const [sortBy, setSortBy] = useState("date-desc");
+
+  const handleFilterChange = (newFilters, newSortBy) => {
+    setFilters(newFilters);
+    setSortBy(newSortBy);
+  };
+
+  const filteredTransactions = useMemo(() => {
+    let result = [...transactions];
+
+    if (filters.type !== "all") {
+      result = result.filter(t => t.type === filters.type);
+    }
+
+    if (filters.fromDate) {
+      result = result.filter(t => t.date >= filters.fromDate);
+    }
+
+    if (filters.toDate) {
+      result = result.filter(t => t.date <= filters.toDate);
+    }
+
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case "date-desc":
+          return b.date.localeCompare(a.date);
+        case "date-asc":
+          return a.date.localeCompare(b.date);
+        case "amount-desc":
+          return Number(b.amount) - Number(a.amount);
+        case "amount-asc":
+          return Number(a.amount) - Number(b.amount);
+        default:
+          return b.date.localeCompare(a.date);
+      }
+    });
+
+    return result;
+  }, [transactions, filters, sortBy]);
+
   const totalIncome = useMemo(
     () =>
-      transactions
+      filteredTransactions
         .filter(t => t.type === "income")
         .reduce((sum, t) => sum + Number(t.amount), 0),
-    [transactions]
+    [filteredTransactions]
   );
 
   const totalExpense = useMemo(
     () =>
-      transactions
+      filteredTransactions
         .filter(t => t.type === "expense")
         .reduce((sum, t) => sum + Number(t.amount), 0),
-    [transactions]
+    [filteredTransactions]
   );
 
   const balance = totalIncome - totalExpense;
@@ -64,6 +111,7 @@ function Dashboard() {
   const pieChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    radius: "75%",
     plugins: {
       legend: {
         position: "bottom",
@@ -96,7 +144,7 @@ function Dashboard() {
   const monthlyData = useMemo(() => {
     const groups = {};
 
-    transactions.forEach(t => {
+    filteredTransactions.forEach(t => {
       const [year, month] = t.date.split("/").slice(0, 2);
       const key = `${year}/${month}`;
 
@@ -117,7 +165,7 @@ function Dashboard() {
     });
 
     return Object.values(groups).sort((a, b) => a.sortKey - b.sortKey);
-  }, [transactions]);
+  }, [filteredTransactions]);
 
   const barChartData = useMemo(
     () => ({
@@ -190,11 +238,14 @@ function Dashboard() {
     },
   };
 
-  const hasData = transactions.length > 0;
+  const hasData = filteredTransactions.length > 0;
 
   return (
     <div className={styled.container}>
       <h1 className={styled.title}>داشبورد</h1>
+      <div className={styled.toolbar}>
+        <FilterToolbar onChange={handleFilterChange} showSort={false} />
+      </div>
 
       <div className={styled.cards}>
         <div className={styled.card} data-type="income">
@@ -217,21 +268,21 @@ function Dashboard() {
       </div>
 
       {hasData ? (
-        <>
+        <div className={styled.chartsGrid}>
           <div className={styled.chartSection}>
             <h2>نسبت درآمد به هزینه</h2>
-            <div className={styled.chartWrapper} style={{ height: "400px" }}>
+            <div className={styled.chartWrapper}>
               <Pie data={pieChartData} options={pieChartOptions} />
             </div>
           </div>
 
           <div className={styled.chartSection}>
             <h2>خلاصه ماهانه</h2>
-            <div className={styled.chartWrapper} style={{ height: "350px" }}>
+            <div className={styled.chartWrapper}>
               <Bar data={barChartData} options={barChartOptions} />
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <div className={styled.emptyMessage}>
           <span>
