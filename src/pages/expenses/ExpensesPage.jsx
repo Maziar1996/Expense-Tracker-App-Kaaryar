@@ -212,5 +212,3 @@ function ExpensesPage() {
 }
 
 export default ExpensesPage;
-
-console.log(<Icon />);

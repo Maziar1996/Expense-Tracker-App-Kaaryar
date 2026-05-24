@@ -16,6 +16,12 @@
   align-items: center;
   gap: 20px;
 }
+.navBar {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+}
 .navList {
   display: flex;
   list-style: none;
@@ -42,6 +48,23 @@
   font-size: 16px;
   font-weight: 500;
   transition: color 0.2s;
+}
+.exitContainer {
+  margin-top: auto;
+  left: 5%;
+  position: absolute;
+}
+.exitContainer button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: none;
+  cursor: pointer;
+  transition: 0.4s all;
+}
+.exitContainer button:hover {
+  transform: scale(1.1);
 }
 .active {
   background: #0b32f4;
