@@ -1,18 +1,18 @@
 import { useState, useMemo } from "react";
 import { useTransactions } from "../../Context/TransactionContext";
 import TransactionsTable from "../../components/TransactionTable/TransactionsTable";
+import FilterToolbar from "../../components/FilterToolbar/FilterToolbar";
+import Pagination from "../../components/Pagination/Pagination";
+import { processTransactions } from "../../utils/transactionFilters";
 import AddTransactionModal from "../../components/AddTransactionModal/AddTransactionModal";
 import EditTransactionModal from "../../components/EditTransactionModal/EditTransactionModal";
-import FilterToolbar from "../../components/FilterToolbar/FilterToolbar";
-import { processTransactions } from "../../utils/transactionFilters";
-
 import Buttons from "../../components/Buttons/Buttons";
 import Spinner from "../../components/Spinner/Spinner";
 import Toast from "../../components/Toast/Toast";
-
-import Icon from "../../assets/svgs/Icon";
-
+import plusIcon from "../../assets/svgs/plusIcon.svg";
 import styled from "./ExpensesPage.module.css";
+
+const ITEMS_PER_PAGE = 10;
 
 function ExpensesPage() {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -25,10 +25,7 @@ function ExpensesPage() {
   });
 
   const [sortBy, setSortBy] = useState("date-desc");
-
   const [currentPage, setCurrentPage] = useState(1);
-
-  const ITEMS_PER_PAGE = 10;
 
   const {
     transactions,
@@ -50,22 +47,17 @@ function ExpensesPage() {
     Math.ceil(filteredTransactions.length / ITEMS_PER_PAGE)
   );
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const safeCurrentPage = Math.min(Math.max(currentPage, 1), totalPages);
 
+  const startIndex = (safeCurrentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentTransactions = filteredTransactions.slice(startIndex, endIndex);
 
-  const isPaginationActive = filteredTransactions.length > ITEMS_PER_PAGE;
-
   const handlePageChange = pageNumber => {
-    if (isPaginationActive && pageNumber >= 1 && pageNumber <= totalPages) {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
-
-  const getPageNumbers = () => {
-    return [1, 2, 3, 4, 5];
   };
 
   const handleAdd = newTransaction => {
@@ -103,20 +95,19 @@ function ExpensesPage() {
 
       <div className={styled.pageContainer}>
         <div className={styled.header}>
+          <h1 className={styled.title}>تراکنش ها</h1>
           <Buttons
             onClick={() => setShowAddModal(true)}
-            title={"افزودن تراکنش"}
-            label={"افزودن تراکنش"}
+            title="افزودن تراکنش"
+            label="افزودن تراکنش"
             style={styled.addTranBtn}
-            icon={<Icon name="PlusIcon" />}
+            icon={plusIcon}
           />
-
-          <h1 className={styled.title}>تراکنش ها</h1>
-          <div className={styled.filterToolbar}>
-            <FilterToolbar onChange={handleFilterChange} />
-          </div>
         </div>
-
+        <FilterToolbar
+          onChange={handleFilterChange}
+          className={styled.expensesToolbar}
+        />
         <div className={styled.contentWrapper}>
           {isLoading ? (
             <Spinner />
@@ -128,66 +119,11 @@ function ExpensesPage() {
                 onEdit={handleOpenEditModal}
               />
 
-              <div className={styled.pagination}>
-                <Buttons
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1 || !isPaginationActive}
-                  style={styled.paginationBtnChevron}
-                  icon={
-                    <Icon
-                      color={
-                        currentPage === totalPages || !isPaginationActive
-                          ? "#0b32f4"
-                          : "#9BA1A8"
-                      }
-                      name="ChevronRightIcon"
-                    />
-                  }
-                  aria-label="صفحه قبل"
-                />
-
-                {getPageNumbers().map(pageNum => {
-                  const isPageAvailable = pageNum <= totalPages;
-
-                  return (
-                    <button
-                      key={pageNum}
-                      onClick={() => handlePageChange(pageNum)}
-                      disabled={!isPaginationActive || !isPageAvailable}
-                      className={`${styled.paginationBtn} ${
-                        currentPage === pageNum &&
-                        isPaginationActive &&
-                        isPageAvailable
-                          ? styled.active
-                          : ""
-                      } ${!isPaginationActive || !isPageAvailable ? styled.disabled : ""}`}
-                      aria-label={`صفحه ${pageNum}`}
-                      aria-current={
-                        currentPage === pageNum ? "page" : undefined
-                      }
-                    >
-                      {pageNum.toLocaleString("fa-IR")}
-                    </button>
-                  );
-                })}
-
-                <Buttons
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages || !isPaginationActive}
-                  style={styled.paginationBtnChevron}
-                  icon={
-                    <Icon
-                      color={
-                        currentPage === totalPages || !isPaginationActive
-                          ? "#9BA1A8"
-                          : "#0b32f4"
-                      }
-                      name="ChevronLeftIcon"
-                    />
-                  }
-                  aria-label="صفحه بعد"
-                />
-              </div>
+              <Pagination
+                currentPage={safeCurrentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </>
           )}
         </div>
@@ -202,6 +138,7 @@ function ExpensesPage() {
 
       {editingTransaction && (
         <EditTransactionModal
+          mode="edit"
           onClose={() => setEditingTransaction(null)}
           onUpdate={handleUpdate}
           transaction={editingTransaction}

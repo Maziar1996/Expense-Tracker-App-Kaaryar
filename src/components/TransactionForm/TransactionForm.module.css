@@ -1,0 +1,176 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.dateInput,
+.amountFieldWrapper,
+.transDesc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.inputGroup {
+  position: relative;
+  width: 312px;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 16px;
+  color: #242d35;
+  font-weight: 400;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.input {
+  width: 312px;
+  height: 44px;
+  border: 1px solid #ddd;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.input:focus {
+  border-color: #2563eb;
+}
+
+.amountFieldWrapper input {
+  text-align: left;
+  direction: ltr;
+}
+
+.radioGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #242d35;
+  cursor: pointer;
+}
+
+.radioLabel input {
+  width: 18px;
+  height: 18px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cancelBtn {
+  width: 75px;
+  height: 32px;
+  padding: 0 15px;
+  background: #ffffff;
+  color: #242d35;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submitBtn {
+  min-width: 58px;
+  height: 32px;
+  padding: 0 16px;
+  background: #0e33f3;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.cancelBtn:hover,
+.submitBtn:hover {
+  opacity: 0.9;
+}
+
+.errorText {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: -24px;
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .form {
+    padding: 0 16px;
+    gap: 20px;
+  }
+  .dateInput,
+  .amountFieldWrapper,
+  .transDesc {
+    gap: 0px;
+  }
+  .amountFieldWrapper {
+    gap: 2px;
+  }
+
+  .amountFieldWrapper .label {
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+  }
+  .input {
+    width: 240px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .inputGroup {
+    width: 240px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .buttons {
+    justify-content: space-between;
+  }
+
+  .cancelBtn {
+    flex: 1;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .submitBtn {
+    flex: 1;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .errorText {
+    font-size: 12px;
+    bottom: -20px;
+  }
+}

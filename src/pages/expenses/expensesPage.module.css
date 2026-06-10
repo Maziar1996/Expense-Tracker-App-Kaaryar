@@ -1,57 +1,15 @@
+.pageContainer {
+  width: min(816px, calc(100% - 32px));
+  margin: 20px auto;
+}
+
 .header {
   display: flex;
-  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px 10px;
-  margin: 0 auto;
+  padding: 16px 24px 12px;
   background: #ffffff;
-  position: relative;
-  flex-wrap: wrap;
-  border-radius: 12px 12px 0 0;
-}
-
-.filterToolbar {
-  margin-top: 20px;
-}
-
-.addTranBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row-reverse;
-  gap: 10px;
-  width: 199px;
-  height: 48px;
-  background: #0b32f4;
-  color: white;
-  font-size: 20px;
-  font-weight: 400;
-  border: none;
-  border-radius: 8px;
-  padding: 4px 24px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.addTranBtn:hover {
-  background-color: #4e33f3;
-}
-
-.pageContainer {
-  margin: 20px auto;
-  width: 816px;
-  max-width: 95%;
-}
-
-.contentWrapper {
-  min-height: 600px;
-  background: #ffffff;
-  border-radius: 0 0 12px 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
+  border-radius: 16px 16px 0 0;
 }
 
 .title {
@@ -61,131 +19,68 @@
   margin: 0;
 }
 
-.errorMessage,
-.successMessage {
-  background: #ef4444;
+.addTranBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 10px;
+  height: 48px;
+  padding: 4px 24px;
+  background: #0b32f4;
   color: white;
-  padding: 10px;
-  text-align: center;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.successMessage {
-  background: #2de24b;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  padding: 20px;
-  border-top: 1px solid #e5e7eb;
-  margin-top: auto;
-}
-
-.paginationBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 22px;
-  border: none;
-  background: none;
-  border-radius: 6px;
-  padding: 0px 6px;
-  color: #242d35;
-  cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 400;
-  transition: all 0.2s;
-}
-
-.paginationBtn.active {
-  color: #0b32f4;
-  border: 1px solid #0e33f3;
-  font-weight: 600;
-}
-
-.paginationBtn:disabled,
-.paginationBtn.disabled {
-  color: #242d35;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.paginationBtn.disabled:hover {
-  transform: none;
-  background: #f9fafb;
-  border-color: #e5e7eb;
-}
-.paginationBtnChevron {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  background: none;
-  transition: all 0.2s;
-  padding: 10px;
+  transition: background 0.2s;
+  white-space: nowrap;
 }
 
-.paginationBtnChevron svg {
-  width: 7px;
-  height: 12px;
+.addTranBtn:hover {
+  background-color: #4e33f3;
 }
 
-.paginationBtnChevron:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+.expensesToolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 24px 14px;
+  background: #ffffff;
 }
 
-@media (max-width: 805px) {
+.contentWrapper {
+  min-height: 600px;
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+@media (max-width: 650px) {
   .header {
-    padding: 20px 10px 0px;
-    max-width: 100%;
-    justify-content: space-around;
+    padding: 14px 16px 10px;
   }
 
-  .pageContainer {
-    width: 420px;
-    margin: 20px auto;
-  }
-
-  .contentWrapper {
-    min-height: 500px;
-  }
-
-  .filterToolbar {
-    min-width: 350px;
-  }
-
-  .pagination {
-    padding: 16px;
-    gap: 6px;
-  }
-}
-
-@media (max-width: 468px) {
-  .pageContainer {
-    width: 95%;
-    margin: 15px auto;
+  .expensesToolbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 16px 12px;
+    gap: 8px;
   }
 
   .contentWrapper {
     min-height: 450px;
   }
+}
 
-  .pagination {
-    padding: 12px;
-    gap: 4px;
-  }
-
-  .paginationBtn {
-    min-width: 32px;
-    height: 32px;
-    font-size: 12px;
-    padding: 6px 8px;
+@media (max-width: 480px) {
+  .pageContainer {
+    width: calc(100% - 24px);
   }
 }

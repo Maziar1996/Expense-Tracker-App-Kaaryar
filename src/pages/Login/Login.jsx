@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import logoImage from "../../assets/svgs/logoImage.svg";
+import logoText from "../../assets/svgs/logoText.svg";
 import styled from "./Login.module.css";
-import Icon from "../../assets/svgs/Icon";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,13 +26,13 @@ const Login = () => {
   return (
     <div className={styled.container}>
       <div className={styled.iconWrapper}>
-        <Icon name="LogoIcon" className={styled.icon} />
-        <Icon name="LogoText" className={styled.icon} />
+        <img src={logoImage} alt="logo-image" />
+        <img src={logoText} alt="logo-text" />
       </div>
       {error && <p className={styled.error}>{error}</p>}
       <form onSubmit={handleLogin}>
         <div className={styled.inputGroup}>
-          <label>ایمیل:</label>
+          <label htmlFor="email">ایمیل</label>
 
           <input
             type="email"
@@ -39,17 +40,19 @@ const Login = () => {
             onChange={e => setEmail(e.target.value)}
             required
             className={styled.input}
+            id="email"
           />
         </div>
 
         <div className={styled.inputGroup}>
-          <label>رمز عبور:</label>
+          <label htmlFor="password">رمز عبور</label>
           <input
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
             className={styled.input}
+            id="password"
           />
         </div>
 

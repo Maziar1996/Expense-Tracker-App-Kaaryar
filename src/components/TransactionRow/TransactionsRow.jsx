@@ -2,7 +2,9 @@ import { formatNumber } from "../../utils/formatNumber";
 import { formatPersianDate } from "../../utils/formatPersainDate";
 import { useEffect, useState, useRef } from "react";
 import Buttons from "../Buttons/Buttons";
-import Icon from "../../assets/svgs/Icon";
+import dotsIcon from "../../assets/svgs/dotsIcon.svg";
+import editIcon from "../../assets/svgs/editIcon.svg";
+import deleteIcon from "../../assets/svgs/deleteIcon.svg";
 import styled from "./TransactionsRow.module.css";
 
 function TransactionsRow({ data, onDelete, onEdit }) {
@@ -82,7 +84,7 @@ function TransactionsRow({ data, onDelete, onEdit }) {
               title={""}
               label={"منو"}
               style={styled.actionMenu}
-              icon={<Icon name="DotsVector" sizeW={5} sizeH={15} />}
+              icon={dotsIcon}
             />
           </div>
 
@@ -97,14 +99,14 @@ function TransactionsRow({ data, onDelete, onEdit }) {
                 title={"ویرایش"}
                 label={"ویرایش"}
                 style={styled.editBtn}
-                icon={<Icon name="EditIcon" />}
+                icon={editIcon}
               />
               <Buttons
                 onClick={handleDelete}
                 title={"حذف"}
                 label={"حذف"}
                 style={styled.trashBtn}
-                icon={<Icon name="TrashIcon" />}
+                icon={deleteIcon}
               />
             </div>
           )}
