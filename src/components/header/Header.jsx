@@ -1,9 +1,11 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import Icon from "../../assets/svgs/Icon";
-import styled from "./Header.module.css";
 import { useAuth } from "../../Context/AuthContext";
+import { NavLink, useNavigate } from "react-router-dom";
 import Buttons from "../Buttons/Buttons";
 
+import logoImage from "../../assets/svgs/logoImage.svg";
+import logoText from "../../assets/svgs/logoText.svg";
+import exitIcon from "../../assets/svgs/exitIcon.svg";
+import styled from "./Header.module.css";
 function Header() {
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -17,8 +19,8 @@ function Header() {
     <header className={styled.header}>
       <nav className={styled.nav}>
         <div className={styled.logo}>
-          <Icon name="LogoIcon" className={styled.logoIcon} />
-          <Icon name="LogoText" className={styled.logoText} />
+          <img src={logoImage} alt="logo-image" />
+          <img src={logoText} alt="logo-text" />
         </div>
 
         <div className={styled.navBar}>
@@ -47,11 +49,9 @@ function Header() {
             <li className={styled.exitLink}></li>
           </ul>
           <div className={styled.exitContainer}>
-            <Buttons
-              onClick={handleLogout}
-              icon={<Icon name="ExitIcon" />}
-              label="خروج"
-            />
+            <button onClick={handleLogout} aria-label="خروج">
+              <img src={exitIcon} alt="" />
+            </button>
           </div>
         </div>
       </nav>

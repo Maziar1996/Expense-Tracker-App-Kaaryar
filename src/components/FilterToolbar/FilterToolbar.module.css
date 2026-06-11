@@ -1,59 +1,23 @@
 .toolbar {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0px 5px;
-  border-radius: 8px;
+  flex-direction: row;
   flex-wrap: wrap;
-}
-
-.dateFilters {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.dateFilters label {
-  font-size: 16px;
-  font-weight: 400;
-  margin-left: 5px;
-  color: #242d35;
-  white-space: nowrap;
+  gap: 12px;
+  width: 100%;
 }
 
 .dateInput {
-  --date-input-width: 186px;
-  --date-input-height: 40px;
+  flex: 1;
+  min-width: 0;
 }
 
-.select:focus {
-  border-color: #2563eb;
+.customSelectWrapper {
+  flex: 1;
+  min-width: 0;
 }
 
-.select:hover {
-  border-color: #aaa;
-}
-
-@media (max-width: 805px) {
-  .toolbar label {
-    font-size: 16px;
-    font-weight: 400;
-    padding: 0px;
-    color: #242d35;
-    white-space: nowrap;
-  }
-
-  .dateFilters {
-    padding: 0px;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .dateInput {
-    --date-input-width: 278px;
-    --date-input-height: 40px;
+@media (max-width: 600px) {
+  .toolbar {
+    flex-direction: column;
   }
 }

@@ -12,6 +12,7 @@
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  border-radius: 24px;
 }
 .text {
   font-family: "Vazirmatn", sans-serif;

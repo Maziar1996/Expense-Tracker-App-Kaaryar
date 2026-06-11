@@ -1,0 +1,94 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  margin-top: auto;
+}
+
+.paginationBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 22px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  padding: 0 6px;
+  color: #242d35;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.2s;
+}
+
+.paginationBtn:hover {
+  color: #0b32f4;
+}
+
+.paginationBtn.active {
+  color: #0b32f4;
+  border: 1px solid #0e33f3;
+  font-weight: 600;
+}
+
+.paginationBtnChevron {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #0b32f4;
+  transition: all 0.2s ease;
+}
+
+.paginationBtnChevron:disabled {
+  color: #9ba1a8;
+  cursor: not-allowed;
+  opacity: 1;
+}
+.paginationBtnChevron:hover {
+  transform: scale(1.3);
+}
+
+.paginationBtnChevron:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+.paginationBtnChevron:disabled:hover {
+  transform: none;
+}
+.paginationEllipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  min-width: 20px;
+  height: 40px;
+  color: #6b7280;
+  font-weight: 600;
+  user-select: none;
+}
+
+@media (max-width: 805px) {
+  .pagination {
+    padding: 16px;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 468px) {
+  .pagination {
+    padding: 12px;
+    gap: 4px;
+  }
+
+  .paginationBtn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}

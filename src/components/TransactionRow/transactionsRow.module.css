@@ -42,6 +42,7 @@
   text-overflow: ellipsis;
   font-weight: 600;
   color: #555;
+  min-height: 24px;
 }
 
 .menuContainer {
@@ -116,7 +117,7 @@
   opacity: 0.6;
 }
 
-@media (max-width: 805px) {
+@media (max-width: 768px) {
   .row {
     grid-template-columns: 2.2fr 1fr;
     grid-template-areas:
@@ -162,15 +163,16 @@
   }
 
   .descriptionCell {
+    grid-area: desc;
     font-size: 15px;
     line-height: 1.6;
     margin-top: 10px;
     align-self: flex-start;
+    padding-left: 30px;
   }
-
   .actionsCell {
     grid-area: actions;
     justify-content: flex-end;
-    margin-top: -25px;
+    margin-top: -30px;
   }
 }

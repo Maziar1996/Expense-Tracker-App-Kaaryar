@@ -51,7 +51,7 @@
 }
 .exitContainer {
   margin-top: auto;
-  left: 5%;
+  left: 4%;
   position: absolute;
 }
 .exitContainer button {
@@ -61,21 +61,18 @@
   border: none;
   padding: none;
   cursor: pointer;
-  transition: 0.4s all;
 }
-.exitContainer button:hover {
-  transform: scale(1.1);
+.exitContainer img {
+  transition: 0.7s all;
+}
+.exitContainer img:hover {
+  transform: scale(1.2);
 }
 .active {
   background: #0b32f4;
   color: #ffffff;
 }
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #242d35;
-  margin: 0;
-}
+
 @media (max-width: 768px) {
   .header {
     padding: 0px 20px 0px 0px;

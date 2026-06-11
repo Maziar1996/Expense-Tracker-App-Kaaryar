@@ -4,6 +4,18 @@
   position: relative;
   background: #ffffff;
 }
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1.8fr 0.6fr;
+  padding: 14px 12px;
+  align-items: center;
+}
+.header {
+  width: 100%;
+  font-weight: bold;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
 
 .emptyMessage {
   position: absolute;
@@ -20,31 +32,16 @@
   color: #777;
   font-size: 18px;
 }
-@media (max-width: 805px) {
+@media (max-width: 768px) {
   .container {
     padding: 16px 20px 20px;
+  }
+  .row.header {
+    display: none;
   }
   .emptyMessage {
     top: 25%;
     padding: 40px 20px;
     font-size: 1rem;
-  }
-}
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr 1.2fr 1.8fr 0.6fr;
-  padding: 14px 12px;
-  align-items: center;
-}
-.header {
-  width: 100%;
-  font-weight: bold;
-  color: var(--text-muted);
-  border-bottom: 2px solid var(--border);
-}
-
-@media (max-width: 805px) {
-  .row.header {
-    display: none;
   }
 }

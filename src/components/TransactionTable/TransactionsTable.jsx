@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TransactionsRow from "../TransactionRow/TransactionsRow";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
-import Icon from "../../assets/svgs/Icon";
+import warningIcon from "../../assets/svgs/warningIcon.svg";
 import styled from "./TransactionsTable.module.css";
 
 function TransactionsTable({ transactions = [], onDelete, onEdit }) {
@@ -39,9 +39,9 @@ function TransactionsTable({ transactions = [], onDelete, onEdit }) {
       ) : (
         <div className={styled.emptyMessage}>
           <span>
-            <Icon name="ExclamationIcon" />
+            <img src={warningIcon} alt="warning" />
           </span>
-          شما هنوز هیچ تراکنشی وارد نکرده اید.
+          شما هنوز هیچ تراکنشی وارد نکرده اید
         </div>
       )}
 
